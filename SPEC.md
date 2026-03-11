@@ -9,6 +9,9 @@ A platform for open source developers to advertise their projects and receive pa
 - **Database**: SQLite (LibSQL/Turso) + Drizzle ORM
 - **Auth**: Custom session-based with Arctic OAuth
 - **Payments**: Salable (checkout links)
+- **Testing**: Playwright (E2E)
+
+---
 
 ## Database Schema
 
@@ -68,6 +71,8 @@ A platform for open source developers to advertise their projects and receive pa
 | salablePaymentId | string? | Salable payment reference |
 | createdAt | timestamp | Creation date |
 
+---
+
 ## Page Routes
 
 | Route | Description |
@@ -87,33 +92,7 @@ A platform for open source developers to advertise their projects and receive pa
 | `/auth/google` | Google OAuth initiation |
 | `/auth/google/callback` | Google OAuth callback |
 
-## Features
-
-### Authentication
-- GitHub OAuth login
-- Google OAuth login
-- Session-based auth with secure cookies
-- 30-day session expiry
-
-### Projects
-- Create projects with name, description, repo URL, website
-- Choose project type: Community, Team, or Individual
-- Toggle bounty program on/off (opt-in)
-- Edit project settings
-- Delete projects (owner only)
-
-### Bounties
-- Create bounties on projects with bounty program enabled
-- Set bounty amount
-- Fund bounties via Salable checkout
-- Claim bounties (developers)
-- Complete bounties (assignee)
-- Track bounty status
-
-### Payments (Salable)
-- Generate checkout links for bounty funding
-- Handle success/cancel callbacks
-- Track payment status
+---
 
 ## Environment Variables
 ```
@@ -129,49 +108,262 @@ SALABLE_BOUNTY_PLAN_UUID=
 SALABLE_OWNER_ID=
 ```
 
-## Missing / To Do
+---
+
+## Development Principles
+- **DRY**: Extract reusable components, utilities, and patterns
+- **SOLID**: Single responsibility, Open-closed, Liskov substitution, Interface segregation, Dependency inversion
+- **Maintainable**: Clear naming, consistent formatting, documented complex logic
+
+## Workflow Rules
+- Push to master after every completed feature
+- Write E2E tests for every feature as it is developed
+- All tests must pass before pushing
+
+---
+
+## Features (Implemented)
+
+### Authentication
+- [x] GitHub OAuth login
+- [x] Google OAuth login
+- [x] Session-based auth with secure cookies
+- [x] 30-day session expiry
+
+### Projects
+- [x] Create projects with name, description, repo URL, website
+- [x] Choose project type: Community, Team, or Individual
+- [x] Toggle bounty program on/off (opt-in)
+- [x] Edit project settings
 - [ ] Delete projects (owner only)
+
+### Bounties
+- [x] Create bounties on projects with bounty program enabled
+- [x] Set bounty amount
+- [x] Fund bounties via Salable checkout
+- [x] Claim bounties (developers)
+- [x] Complete bounties (assignee)
+- [x] Track bounty status
+
+### Payments (Salable)
+- [x] Generate checkout links for bounty funding
+- [x] Handle success/cancel callbacks
+- [x] Track payment status
 - [ ] Payout tracking for completed bounties
-- [ ] Database setup (create tables via drizzle push)
-- [ ] Environment variables configuration in Vercel
-- [ ] OAuth callback URLs configuration in GitHub/Google
 
-## Implementation Tasks
+---
 
-### Phase 1: Foundation
+## Future Features
+
+### MVP Features (Priority 1)
+
+#### Team Management
+- [ ] Team invites (email/username)
+- [ ] Roles: owner, admin, member
+- [ ] Remove members (owner/admin)
+- [ ] Bounty creation permissions (owner + admins)
+
+#### Bounty Enhancements
+- [ ] Skill tags (JavaScript, Rust, Python, etc.)
+- [ ] Priority levels (low, medium, high, urgent)
+- [ ] Deadline (optional time limit)
+- [ ] Submission requirements (PR link, notes)
+- [ ] Review workflow (assignee submits work → owner approves → paid)
+
+#### Search & Discovery
+- [ ] Full-text search (projects, bounties)
+- [ ] Filters: status, amount range, skills, project type
+- [ ] Sorting: newest, highest bounty, deadline
+- [ ] Categories for projects
+
+#### User Profiles
+- [ ] Bio/description
+- [ ] Skills list
+- [ ] Portfolio (completed bounties)
+- [ ] Earnings history (private to user)
+- [ ] Avatar upload (beyond OAuth)
+
+### v2 Features (Priority 2)
+
+#### Notifications
+- [ ] In-app notification center
+- [ ] Email notifications (new bounties, status changes, payments)
+
+#### Analytics & Dashboard
+- [ ] Project stats: total raised, bounties completed, active
+- [ ] Developer stats: earnings, completed bounties
+- [ ] Owner dashboard: spending, active bounties
+
+#### Platform Revenue System
+- [ ] Commission % on each bounty (configurable)
+- [ ] Payment posting fee ($5 after 1st free)
+- [ ] Fee collection + tracking
+- [ ] Developer payout system
+
+### v3 Features (Priority 3)
+
+#### Trust & Workflow
+- [ ] Work submission with PR/demo link
+- [ ] Owner approval before payment release
+- [ ] Cancel/abandon handling
+- [ ] Refund workflow
+
+#### Security & Validation
+- [ ] Input sanitization
+- [ ] Rate limiting
+- [ ] CSRF protection
+- [ ] Proper error handling
+
+#### Enterprise Features
+- [ ] Private projects (invite-only)
+- [ ] API access
+- [ ] Priority support
+- [ ] Custom branding
+
+---
+
+## Monetization Tiers
+
+| Tier | Price | Features |
+|------|-------|----------|
+| Free | $0 | 1 bounty/month, 5% commission |
+| Pro | $9/mo | Unlimited bounties, 3% commission, analytics |
+| Enterprise | $49/mo | Team features, priority support, API |
+
+---
+
+## E2E Testing
+
+### Framework: Playwright
+- Native TypeScript support
+- Auto-wait (reduces flakiness)
+- Built-in SvelteKit testing via `webServer` config
+- Great CI/CD integration
+
+### Test Structure
+```
+tests/
+├── e2e/
+│   ├── auth/
+│   │   ├── login-github.spec.ts
+│   │   ├── login-google.spec.ts
+│   │   └── logout.spec.ts
+│   ├── projects/
+│   │   ├── create-project.spec.ts
+│   │   ├── edit-project.spec.ts
+│   │   ├── delete-project.spec.ts
+│   │   └── project-listings.spec.ts
+│   ├── bounties/
+│   │   ├── create-bounty.spec.ts
+│   │   ├── fund-bounty.spec.ts
+│   │   ├── claim-bounty.spec.ts
+│   │   ├── complete-bounty.spec.ts
+│   │   └── bounty-listings.spec.ts
+│   ├── dashboard/
+│   │   └── user-dashboard.spec.ts
+│   └── profile/
+│       └── public-profile.spec.ts
+├── utils/
+│   ├── test-user.ts
+│   ├── test-project.ts
+│   ├── test-bounty.ts
+│   └── db.ts
+└── fixtures/
+    └── test-data.ts
+```
+
+### Playwright Configuration
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  webServer: {
+    command: 'npm run build && npm run preview',
+    port: 4173,
+    reuseExistingServer: !process.env.CI,
+  },
+  testDir: 'tests/e2e',
+  fullyParallel: true,
+  retries: process.env.CI ? 2 : 0,
+  timeout: 120000,
+  use: {
+    baseURL: 'http://localhost:4173',
+    trace: 'on-first-retry',
+  },
+});
+```
+
+### CI/CD Integration
+```yaml
+# .github/workflows/e2e.yml
+name: E2E Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run test:e2e
+```
+
+---
+
+## Task Checklist
+
+### Setup Tasks (Before First Deploy)
+- [ ] Set up Turso database and run migrations
+- [ ] Configure environment variables (.env file)
+- [ ] Set up OAuth apps in GitHub and Google
+- [ ] Verify local dev server runs
+- [ ] Test OAuth login flow
+- [ ] Create first test project
+- [ ] Create first test bounty
+- [ ] Verify payment flow with Salable test mode
+- [ ] Deploy to Vercel production
+- [ ] Configure production OAuth callbacks
+
+### Implementation Tasks
+
+#### Phase 1: Foundation
 - [x] Initialize SvelteKit project
 - [x] Set up Tailwind CSS
 - [x] Configure Drizzle ORM
 - [x] Create database schema
 
-### Phase 2: Authentication
+#### Phase 2: Authentication
 - [x] Implement custom session auth
 - [x] Create OAuth endpoints (GitHub, Google)
 - [x] Build login page
 - [x] Add auth hooks
 
-### Phase 3: Projects
+#### Phase 3: Projects
 - [x] Project CRUD operations
 - [x] Create project page
 - [x] Edit project page
 - [x] Project listing page (explore)
 - [x] Project detail page
 
-### Phase 4: Bounties
+#### Phase 4: Bounties
 - [x] Bounty CRUD operations
 - [x] Create bounty page
 - [x] Bounty listing (on project page)
 - [x] Bounty detail page
 - [x] Claim/complete workflow
 
-### Phase 5: Payments
+#### Phase 5: Payments
 - [x] Salable integration
 - [x] Checkout link generation
 - [x] Payment success/cancel handling (basic)
 
-### Phase 6: UI/UX
+#### Phase 6: UI/UX
 - [x] Home page
 - [x] Explore page
 - [x] User dashboard
 - [x] Profile pages
 - [x] Responsive design
+
+#### Testing & DevOps
+- [x] Set up E2E tests with Playwright
+- [ ] Configure CI/CD pipeline
