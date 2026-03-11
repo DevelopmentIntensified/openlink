@@ -15,6 +15,7 @@
     "@sveltejs/adapter-auto": "^7.0.1",
     "@sveltejs/kit": "^2.53.4",
     "@sveltejs/vite-plugin-svelte": "^5.0.1",
+    "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^22.0.0",
     "autoprefixer": "^10.4.27",
     "drizzle-kit": "^0.31.9",
