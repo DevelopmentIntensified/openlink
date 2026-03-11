@@ -125,7 +125,16 @@ PUBLIC_URL=http://localhost:5173
 TURSO_DATABASE_URL=
 TURSO_AUTH_TOKEN=
 SALABLE_API_KEY=
+SALABLE_BOUNTY_PLAN_UUID=
+SALABLE_OWNER_ID=
 ```
+
+## Missing / To Do
+- [ ] Delete projects (owner only)
+- [ ] Payout tracking for completed bounties
+- [ ] Database setup (create tables via drizzle push)
+- [ ] Environment variables configuration in Vercel
+- [ ] OAuth callback URLs configuration in GitHub/Google
 
 ## Implementation Tasks
 
@@ -136,34 +145,33 @@ SALABLE_API_KEY=
 - [x] Create database schema
 
 ### Phase 2: Authentication
-- [ ] Implement custom session auth
-- [ ] Create OAuth endpoints (GitHub, Google)
-- [ ] Build login page
-- [ ] Add auth hooks
+- [x] Implement custom session auth
+- [x] Create OAuth endpoints (GitHub, Google)
+- [x] Build login page
+- [x] Add auth hooks
 
 ### Phase 3: Projects
-- [ ] Project CRUD operations
-- [ ] Create project page
-- [ ] Edit project page
-- [ ] Project listing page
-- [ ] Project detail page
+- [x] Project CRUD operations
+- [x] Create project page
+- [x] Edit project page
+- [x] Project listing page (explore)
+- [x] Project detail page
 
 ### Phase 4: Bounties
-- [ ] Bounty CRUD operations
-- [ ] Create bounty page
-- [ ] Bounty listing (on project page)
-- [ ] Bounty detail page
-- [ ] Claim/complete workflow
+- [x] Bounty CRUD operations
+- [x] Create bounty page
+- [x] Bounty listing (on project page)
+- [x] Bounty detail page
+- [x] Claim/complete workflow
 
 ### Phase 5: Payments
-- [ ] Salable integration
-- [ ] Checkout link generation
-- [ ] Payment success/cancel handling
-- [ ] Payout tracking
+- [x] Salable integration
+- [x] Checkout link generation
+- [x] Payment success/cancel handling (basic)
 
 ### Phase 6: UI/UX
-- [ ] Home page
-- [ ] Explore page
-- [ ] User dashboard
-- [ ] Profile pages
-- [ ] Responsive design
+- [x] Home page
+- [x] Explore page
+- [x] User dashboard
+- [x] Profile pages
+- [x] Responsive design
