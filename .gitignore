@@ -5,3 +5,5 @@ build
 *.db
 *.db-journal
 drizzle
+
+.vercel

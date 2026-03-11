@@ -52,5 +52,26 @@ export const actions: Actions = {
 		}).where(eq(projects.id, params.id));
 
 		throw redirect(302, '/dashboard');
+	},
+	delete: async ({ params, locals }) => {
+		if (!locals.user) {
+			throw redirect(302, '/login');
+		}
+
+		const project = await db.query.projects.findFirst({
+			where: eq(projects.id, params.id)
+		});
+
+		if (!project) {
+			throw error(404, 'Project not found');
+		}
+
+		if (project.ownerId !== locals.user.id) {
+			throw error(403, 'Not authorized');
+		}
+
+		await db.delete(projects).where(eq(projects.id, params.id));
+
+		throw redirect(302, '/dashboard');
 	}
 };

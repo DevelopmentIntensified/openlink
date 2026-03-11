@@ -119,5 +119,15 @@
 				</button>
 			</div>
 		</form>
+
+		<div class="mt-8 pt-8 border-t border-gray-800">
+			<h2 class="text-xl font-semibold text-white mb-4">Danger Zone</h2>
+			<p class="text-gray-400 mb-4">Once you delete a project, there is no going back.</p>
+			<form method="POST" action="?/delete" use:enhance>
+				<button type="submit" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
+					Delete Project
+				</button>
+			</form>
+		</div>
 	</main>
 </div>
