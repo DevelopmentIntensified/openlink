@@ -57,11 +57,8 @@
 				</ul>
 			</div>
 
-			<div class="bg-white rounded-xl shadow-lg border border-teal-200 p-8 relative">
-				<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-					RECOMMENDED
-				</div>
-				<div class="flex items-center gap-3 mb-4">
+		<div class="bg-white rounded-xl shadow-lg border border-teal-200 p-8">
+			<div class="flex items-center gap-3 mb-4">
 					<div class="w-10 h-10 rounded-lg bg-cyan-100 flex items-center justify-center">
 						<svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
