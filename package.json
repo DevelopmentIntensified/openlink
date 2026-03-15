@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"@better-auth/cli": "~1.4.21",
-		"@libsql/client": "^0.6.2",
+		"@libsql/client": "^0.10.0",
 		"@playwright/test": "^1.40.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.5.0",
