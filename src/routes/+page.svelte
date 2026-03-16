@@ -13,33 +13,21 @@
 		</div>
 		
 		<div class="max-w-4xl mx-auto text-center">
-			<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-8 animate-fade-in-up">
-				<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-				Open Source Funding Reimagined
-			</div>
-			
-			<h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900 mb-6 animate-fade-in-up delay-100">
-				Get paid for your code.
-				<span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"> Or fund it.</span>
+			<h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900 mb-6 animate-fade-in-up">
+				Put your money where<br class="sm:hidden" /> your <span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">need</span> is.
 			</h1>
 			
-			<p class="text-xl text-gray-600 mb-6 max-w-xl mx-auto leading-relaxed animate-fade-in-up delay-200">
-				Put your money where your need is.
+			<p class="text-xl text-gray-600 mb-4 max-w-xl mx-auto leading-relaxed animate-fade-in-up delay-100">
+				Fund features you need. Get code you want.
 			</p>
 			
-			<p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto animate-fade-in-up delay-300">
-				The bounty platform for open source.
+			<p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto animate-fade-in-up delay-200">
+				The open source bounty platform.
 			</p>
 			
 			<div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
-				<a href="/dashboard/project/new" class="btn-primary-gradient text-base px-8 py-3 btn-lift">
-					Start Your Project
-					<svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-					</svg>
-				</a>
-				<a href="/explore" class="btn-secondary text-base px-8 py-3 btn-lift">
-					Explore Projects
+				<a href="/auth/signup" class="btn-primary-gradient text-base px-8 py-3 btn-lift">
+					Get Started Free
 				</a>
 			</div>
 		</div>
