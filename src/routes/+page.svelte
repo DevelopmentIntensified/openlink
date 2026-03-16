@@ -19,12 +19,12 @@
 			</div>
 			
 			<h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900 mb-6 animate-fade-in-up delay-100">
-				Build the future of
-				<span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"> Open Source</span>
+				Ship faster with
+				<span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"> Bounties</span>
 			</h1>
 			
-			<p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-200">
-				Connect maintainers with contributors. Fund features you need. Get work done through bounties that actually get completed.
+			<p class="text-xl text-gray-600 mb-10 max-w-xl mx-auto leading-relaxed animate-fade-in-up delay-200">
+				Fund features. Pay contributors. Get results.
 			</p>
 			
 			<div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
