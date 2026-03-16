@@ -23,7 +23,11 @@
 				<span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"> Or fund it.</span>
 			</h1>
 			
-			<p class="text-xl text-gray-600 mb-10 max-w-xl mx-auto leading-relaxed animate-fade-in-up delay-200">
+			<p class="text-xl text-gray-600 mb-6 max-w-xl mx-auto leading-relaxed animate-fade-in-up delay-200">
+				Put your money where your need is.
+			</p>
+			
+			<p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto animate-fade-in-up delay-300">
 				The bounty platform for open source.
 			</p>
 			
