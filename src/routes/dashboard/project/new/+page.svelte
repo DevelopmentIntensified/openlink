@@ -119,7 +119,7 @@
 						type="checkbox"
 						id="isBountyEnabled"
 						name="isBountyEnabled"
-						class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+						class="h-4 w-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
 					/>
 				</div>
 				<div class="ml-3 text-sm">

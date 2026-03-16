@@ -63,8 +63,8 @@
 	<!-- Results -->
 	{#if projects.length === 0}
 		<div class="card p-12 text-center">
-			<div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center">
-				<svg class="w-8 h-8 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+				<svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 				</svg>
 			</div>
@@ -77,9 +77,9 @@
 	{:else}
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each projects as project}
-				<a href="/project/{project.id}" class="card p-6 group hover:border-teal-300">
+				<a href="/project/{project.id}" class="card-hover p-6 group">
 					<div class="flex items-start justify-between mb-4">
-						<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white font-bold text-lg">
+						<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
 							{project.name.charAt(0).toUpperCase()}
 						</div>
 						<div class="flex gap-2">
@@ -87,7 +87,7 @@
 						</div>
 					</div>
 					
-					<h2 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-teal-600 transition-colors">
+					<h2 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
 						{project.name}
 					</h2>
 					

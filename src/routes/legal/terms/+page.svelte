@@ -2,7 +2,7 @@
 </script>
 
 <svelte:head>
-	<title>Terms of Service - OpenLink</title>
+	<title>Terms of Service - BountyForge</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 py-12">
@@ -16,14 +16,14 @@
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">1. Acceptance of Terms</h2>
 					<p class="text-gray-600">
-						By accessing and using OpenLink, you accept and agree to be bound by the terms and provision of this agreement.
+						By accessing and using BountyForge, you accept and agree to be bound by the terms and provision of this agreement.
 					</p>
 				</section>
 
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">2. Description of Service</h2>
 					<p class="text-gray-600">
-						OpenLink is a platform that connects open source developers with bounty sponsors. Users can post bounties, fund projects, and collaborate on open source development.
+						BountyForge is a platform that connects open source developers with bounty sponsors. Users can post bounties, fund projects, and collaborate on open source development.
 					</p>
 				</section>
 
@@ -41,7 +41,7 @@
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">4. Bounties and Payments</h2>
 					<p class="text-gray-600 mb-3">
-						When you fund or claim bounties on OpenLink:
+						When you fund or claim bounties on BountyForge:
 					</p>
 					<ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
 						<li>All payments are processed through our platform</li>
@@ -54,7 +54,7 @@
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">5. User Content</h2>
 					<p class="text-gray-600">
-						You retain ownership of content you submit to OpenLink. By posting content, you grant us license to use, display, and reproduce that content on our platform.
+						You retain ownership of content you submit to BountyForge. By posting content, you grant us license to use, display, and reproduce that content on our platform.
 					</p>
 				</section>
 
@@ -80,21 +80,21 @@
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">8. Disclaimer</h2>
 					<p class="text-gray-600">
-						OpenLink is provided "as is" without warranty of any kind. We do not guarantee the quality or outcomes of bounties posted on the platform.
+						BountyForge is provided "as is" without warranty of any kind. We do not guarantee the quality or outcomes of bounties posted on the platform.
 					</p>
 				</section>
 
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">9. Limitation of Liability</h2>
 					<p class="text-gray-600">
-						OpenLink shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform.
+						BountyForge shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform.
 					</p>
 				</section>
 
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">10. Contact</h2>
 					<p class="text-gray-600">
-						For questions about these Terms of Service, please contact us at support@openlink.dev.
+						For questions about these Terms of Service, please contact us at support@bountyforge.dev.
 					</p>
 				</section>
 			</div>

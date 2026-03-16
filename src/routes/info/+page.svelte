@@ -2,23 +2,23 @@
 </script>
 
 <svelte:head>
-	<title>About - OpenLink</title>
-	<meta name="description" content="Learn about OpenLink - the platform connecting developers with open source funding" />
+	<title>About - BountyForge</title>
+	<meta name="description" content="Learn about BountyForge - the platform connecting developers with open source funding" />
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 py-12">
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
-			<h1 class="text-4xl font-bold text-gray-900 mb-4">About OpenLink</h1>
+			<h1 class="text-4xl font-bold text-gray-900 mb-4">About BountyForge</h1>
 			<p class="text-xl text-gray-600">
-				OpenLink is a platform that connects open source developers with sponsors who want to fund meaningful work.
+				BountyForge is a platform that connects open source developers with sponsors who want to fund meaningful work.
 			</p>
 		</div>
 
 		<div class="grid md:grid-cols-2 gap-6">
 			<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-				<div class="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center mb-4">
-					<svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<div class="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center mb-4">
+					<svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 					</svg>
 				</div>
@@ -29,8 +29,8 @@
 			</div>
 
 			<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-				<div class="w-12 h-12 rounded-lg bg-cyan-100 flex items-center justify-center mb-4">
-					<svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<div class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center mb-4">
+					<svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
 					</svg>
 				</div>
@@ -65,16 +65,16 @@
 			</div>
 		</div>
 
-		<div class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl shadow-lg p-8 mt-8 text-white">
+		<div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl shadow-lg p-8 mt-8 text-white">
 			<h2 class="text-2xl font-bold mb-4">Get Started</h2>
-			<p class="text-teal-100 mb-6">
-				Join hundreds of developers and sponsors already using OpenLink to build the future of open source.
+			<p class="text-amber-100 mb-6">
+				Join hundreds of developers and sponsors already using BountyForge to build the future of open source.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4">
-				<a href="/auth/signup" class="inline-flex items-center justify-center px-6 py-3 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 transition">
+				<a href="/auth/signup" class="inline-flex items-center justify-center px-6 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105 shadow-lg">
 					Sign Up
 				</a>
-				<a href="/explore" class="inline-flex items-center justify-center px-6 py-3 border border-white text-white font-semibold rounded-lg hover:bg-white/10 transition">
+				<a href="/explore" class="inline-flex items-center justify-center px-6 py-3 border border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-200 hover:scale-105">
 					Explore Bounties
 				</a>
 			</div>

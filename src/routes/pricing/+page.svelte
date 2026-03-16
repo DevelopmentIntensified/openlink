@@ -2,8 +2,8 @@
 </script>
 
 <svelte:head>
-	<title>Pricing - OpenLink</title>
-	<meta name="description" content="OpenLink pricing - Free for developers. Low fees for sponsors." />
+	<title>Pricing - BountyForge</title>
+	<meta name="description" content="BountyForge pricing - Free for developers. Low fees for sponsors." />
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 py-12">
@@ -18,8 +18,8 @@
 		<div class="grid md:grid-cols-2 gap-8 mb-16">
 			<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
 				<div class="flex items-center gap-3 mb-4">
-					<div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center">
-						<svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+						<svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 						</svg>
 					</div>
@@ -31,25 +31,25 @@
 				</div>
 				<ul class="space-y-3 mb-8">
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Post unlimited bounties
 					</li>
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Secure escrow payments
 					</li>
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Access to developer talent
 					</li>
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Dispute resolution support
@@ -57,10 +57,10 @@
 				</ul>
 			</div>
 
-		<div class="bg-white rounded-xl shadow-lg border border-teal-200 p-8">
+		<div class="bg-white rounded-xl shadow-lg border border-amber-200 p-8">
 			<div class="flex items-center gap-3 mb-4">
-					<div class="w-10 h-10 rounded-lg bg-cyan-100 flex items-center justify-center">
-						<svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
+						<svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
 						</svg>
 					</div>
@@ -72,25 +72,25 @@
 				</div>
 				<ul class="space-y-3 mb-8">
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Free to use
 					</li>
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Keep 100% of earnings
 					</li>
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Instant payouts
 					</li>
 					<li class="flex items-center gap-2 text-gray-600">
-						<svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 						</svg>
 						Build your portfolio
@@ -103,8 +103,8 @@
 			<h2 class="text-2xl font-bold text-gray-900 mb-6">How Funding Works</h2>
 			<div class="grid md:grid-cols-3 gap-8">
 				<div class="text-center">
-					<div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
-						<span class="text-xl font-bold text-teal-600">1</span>
+					<div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+						<span class="text-xl font-bold text-amber-600">1</span>
 					</div>
 					<h3 class="font-semibold text-gray-900 mb-2">Sponsor Posts Bounty</h3>
 					<p class="text-gray-600 text-sm">
@@ -112,8 +112,8 @@
 					</p>
 				</div>
 				<div class="text-center">
-					<div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
-						<span class="text-xl font-bold text-teal-600">2</span>
+					<div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+						<span class="text-xl font-bold text-amber-600">2</span>
 					</div>
 					<h3 class="font-semibold text-gray-900 mb-2">Developer Completes Work</h3>
 					<p class="text-gray-600 text-sm">
@@ -121,8 +121,8 @@
 					</p>
 				</div>
 				<div class="text-center">
-					<div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
-						<span class="text-xl font-bold text-teal-600">3</span>
+					<div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+						<span class="text-xl font-bold text-amber-600">3</span>
 					</div>
 					<h3 class="font-semibold text-gray-900 mb-2">Get Paid</h3>
 					<p class="text-gray-600 text-sm">
@@ -138,10 +138,10 @@
 				Join developers and sponsors building the future of open source.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4 justify-center">
-				<a href="/auth/signup" class="inline-flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition">
+				<a href="/auth/signup" class="btn-primary-gradient btn-lift">
 					Sign Up Free
 				</a>
-				<a href="/explore" class="inline-flex items-center justify-center px-6 py-3 border border-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition">
+				<a href="/explore" class="inline-flex items-center justify-center px-6 py-3 border border-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-200 hover:border-gray-500">
 					Browse Bounties
 				</a>
 			</div>

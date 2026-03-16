@@ -14,7 +14,7 @@ export async function createProject(data: {
 }) {
 	const id = crypto.randomUUID();
 	const now = new Date();
-	
+
 	await db.insert(projects).values({
 		id,
 		name: data.name,
@@ -27,7 +27,7 @@ export async function createProject(data: {
 		ownerId: data.ownerId,
 		createdAt: now
 	});
-	
+
 	return id;
 }
 
@@ -37,26 +37,33 @@ export async function getProjectById(id: string) {
 }
 
 export async function getProjectsByOwner(ownerId: string) {
-	return db.select().from(projects).where(eq(projects.ownerId, ownerId)).orderBy(desc(projects.createdAt));
+	return db
+		.select()
+		.from(projects)
+		.where(eq(projects.ownerId, ownerId))
+		.orderBy(desc(projects.createdAt));
 }
 
 export async function getAllProjects(limit = 50, offset = 0) {
 	return db.select().from(projects).orderBy(desc(projects.createdAt)).limit(limit).offset(offset);
 }
 
-export async function updateProject(id: string, data: {
-	name?: string;
-	description?: string;
-	repoUrl?: string;
-	website?: string;
-	category?: string;
-	type?: 'community' | 'team' | 'individual';
-	isBountyEnabled?: boolean;
-}) {
+export async function updateProject(
+	id: string,
+	data: {
+		name?: string;
+		description?: string;
+		repoUrl?: string;
+		website?: string;
+		category?: string;
+		type?: 'community' | 'team' | 'individual';
+		isBountyEnabled?: boolean;
+	}
+) {
 	const updateData: any = { ...data };
 	if (data.category) updateData.category = data.category;
 	if (data.type) updateData.type = data.type;
-	
+
 	await db.update(projects).set(updateData).where(eq(projects.id, id));
 }
 
@@ -67,16 +74,19 @@ export async function deleteProject(id: string) {
 export async function getProjectWithBounties(projectId: string) {
 	const projectResult = await db.select().from(projects).where(eq(projects.id, projectId));
 	if (!projectResult[0]) return null;
-	
+
 	const project = projectResult[0];
 	const projectBounties = await db.select().from(bounties).where(eq(bounties.projectId, projectId));
-	const ownerResult = await db.select({
-		id: users.id,
-		username: users.username,
-		avatarUrl: users.avatarUrl,
-		bio: users.bio
-	}).from(users).where(eq(users.id, project.ownerId));
-	
+	const ownerResult = await db
+		.select({
+			id: users.id,
+			username: users.username,
+			avatarUrl: users.avatarUrl,
+			bio: users.bio
+		})
+		.from(users)
+		.where(eq(users.id, project.ownerId));
+
 	return {
 		...project,
 		bounties: projectBounties,
@@ -85,8 +95,5 @@ export async function getProjectWithBounties(projectId: string) {
 }
 
 export async function getFeaturedProjects(limit = 6) {
-	return db.select().from(projects)
-		.where(eq(projects.isBountyEnabled, true))
-		.limit(limit)
-		.orderBy(desc(projects.createdAt));
+	return db.select().from(projects).limit(limit).orderBy(desc(projects.createdAt));
 }

@@ -2,7 +2,7 @@
 </script>
 
 <svelte:head>
-	<title>Privacy Policy - OpenLink</title>
+	<title>Privacy Policy - BountyForge</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 py-12">
@@ -16,7 +16,7 @@
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">1. Introduction</h2>
 					<p class="text-gray-600">
-						OpenLink ("we," "our," or "us") operates the OpenLink platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform.
+						BountyForge ("we," "our," or "us") operates the BountyForge platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform.
 					</p>
 				</section>
 
@@ -70,7 +70,7 @@
 				<section>
 					<h2 class="text-xl font-semibold text-gray-900 mb-3">7. Contact Us</h2>
 					<p class="text-gray-600">
-						If you have any questions about this Privacy Policy, please contact us at support@openlink.dev.
+						If you have any questions about this Privacy Policy, please contact us at support@bountyforge.dev.
 					</p>
 				</section>
 			</div>

@@ -10,7 +10,7 @@ export const auth = betterAuth({
 	secret: env.BETTER_AUTH_SECRET,
 	trustedOrigins:
 		env.NODE_ENV === 'production'
-			? [env.ORIGIN!, 'https://openlink.dev']
+			? [env.ORIGIN!, 'https://bountyforge.dev']
 			: [env.ORIGIN!, 'http://localhost:5173', 'http://localhost:4173'],
 	database: drizzleAdapter(db, { provider: 'sqlite' }),
 	emailAndPassword: {
@@ -54,7 +54,7 @@ export const auth = betterAuth({
 		useSecureCookies: env.NODE_ENV === 'production',
 		disableCSRFCheck: false,
 		disableOriginCheck: false,
-		cookiePrefix: 'openlink'
+		cookiePrefix: 'bountyforge'
 	},
 	plugins: [sveltekitCookies(getRequestEvent)]
 });
