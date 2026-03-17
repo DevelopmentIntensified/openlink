@@ -14,6 +14,6 @@
   <rect x="580" y="250" width="20" height="90" rx="4" fill="white"/>
   <rect x="530" y="250" width="60" height="25" rx="4" fill="white"/>
   <rect x="530" y="320" width="40" height="20" rx="4" fill="white"/>
-  <text x="600" y="440" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">Put your money where</text>
-  <text x="600" y="490" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">your <tspan fill="url(#logo-grad)">need</tspan> is.</text>
+  <text x="600" y="430" font-family="system-ui, sans-serif" font-size="44" font-weight="700" fill="white" text-anchor="middle">Forge the features you need</text>
+  <text x="600" y="485" font-family="system-ui, sans-serif" font-size="44" font-weight="700" fill="white" text-anchor="middle">from your <tspan fill="url(#logo-grad)">dependencies</tspan></text>
 </svg>

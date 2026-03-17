@@ -14,7 +14,7 @@
 		
 		<div class="max-w-4xl mx-auto text-center">
 			<h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900 mb-6 animate-fade-in-up">
-				Put your money where<br class="sm:hidden" /> your <span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">need</span> is.
+				Forge the features you need<br class="sm:hidden" /> from your <span class="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">dependencies</span>
 			</h1>
 			
 			<p class="text-xl text-gray-600 mb-4 max-w-xl mx-auto leading-relaxed animate-fade-in-up delay-100">
