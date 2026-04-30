@@ -1,40 +1,43 @@
 import type { Handle } from '@sveltejs/kit';
-import { building } from '$app/environment';
+import { checkRouteAccess, getUserRoles } from '$lib/server/rbac/route-guard';
 import { auth } from '$lib/server/auth';
-import { svelteKitHandler } from 'better-auth/svelte-kit';
 
-const securityHeaders: Handle = async ({ event, resolve }) => {
-	const response = await resolve(event);
-
-	if (!building) {
-		response.headers.set('X-Content-Type-Options', 'nosniff');
-		response.headers.set('X-Frame-Options', 'DENY');
-		response.headers.set('X-XSS-Protection', '1; mode=block');
-		response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-		response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-		response.headers.set(
-			'Content-Security-Policy',
-			"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
-		);
+export const handle: Handle = async ({ event, resolve }) => {
+	// Skip auth check for login API (needed for role selection)
+	if (event.url.pathname === '/api/auth/login') {
+		return resolve(event);
 	}
 
-	return response;
-};
+	// Get session and user
+	const session = await auth.api.getSession({
+		headers: event.request.headers
+	});
 
-const handleBetterAuth: Handle = async ({ event, resolve }) => {
-	const session = await auth.api.getSession({ headers: event.request.headers });
+	let userRoles: string[] | null = null;
 
-	if (session) {
-		event.locals.session = session.session;
+	if (session?.user) {
+		userRoles = getUserRoles(session.user);
 		event.locals.user = session.user;
 	}
 
-	event.locals.auth = auth;
+	// Check route access using deep module
+	const routeCheck = checkRouteAccess(event.url.pathname, userRoles);
 
-	return svelteKitHandler({ event, resolve, auth, building });
+	if (!routeCheck.allowed && routeCheck.redirect) {
+		return new Response(null, {
+			status: 302,
+			headers: { Location: routeCheck.redirect }
+		});
+	}
+
+	return resolve(event);
 };
 
-export const handle: Handle = async ({ event, resolve }) => {
-	const result = await handleBetterAuth({ event, resolve });
-	return securityHeaders({ event, resolve: () => result });
-};
+// Extend app locals type
+declare global {
+	namespace App {
+		interface Locals {
+			user?: any;
+		}
+	}
+}

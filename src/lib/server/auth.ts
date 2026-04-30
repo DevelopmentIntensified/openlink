@@ -5,7 +5,7 @@ import { getRequestEvent } from '$app/server';
 import { env } from '$env/dynamic/private';
 import { db } from '$lib/server/db';
 
-export const auth = betterAuth({
+export const authConfig = {
 	baseURL: env.ORIGIN,
 	secret: env.BETTER_AUTH_SECRET,
 	trustedOrigins:
@@ -56,5 +56,14 @@ export const auth = betterAuth({
 		disableOriginCheck: false,
 		cookiePrefix: 'bountyforge'
 	},
-	plugins: [sveltekitCookies(getRequestEvent)]
-});
+	plugins: [sveltekitCookies(getRequestEvent)],
+	userAdditionalFields: {
+		roles: {
+			type: 'array',
+			items: { type: 'string' },
+			defaultValue: ['dev']
+		}
+	}
+};
+
+export const auth = betterAuth(authConfig);
