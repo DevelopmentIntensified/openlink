@@ -62,6 +62,23 @@ export const authConfig = {
 			type: 'array',
 			items: { type: 'string' },
 			defaultValue: ['dev']
+		},
+		bio: {
+			type: 'string',
+			defaultValue: ''
+		},
+		skills: {
+			type: 'array',
+			items: { type: 'string' },
+			defaultValue: []
+		},
+		githubUrl: {
+			type: 'string',
+			defaultValue: ''
+		},
+		onboardingComplete: {
+			type: 'boolean',
+			defaultValue: false
 		}
 	}
 };
