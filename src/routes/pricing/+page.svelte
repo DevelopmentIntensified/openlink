@@ -137,14 +137,14 @@
 			<p class="text-gray-400 mb-6">
 				Join developers and sponsors building the future of open source.
 			</p>
-			<div class="flex flex-col sm:flex-row gap-4 justify-center">
-				<a href="/auth/signup" class="btn-primary-gradient btn-lift">
-					Sign Up Free
-				</a>
-				<a href="/explore" class="inline-flex items-center justify-center px-6 py-3 border border-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-200 hover:border-gray-500">
-					Browse Bounties
-				</a>
-			</div>
+		<div class="flex flex-col sm:flex-row gap-4 justify-center">
+			<a href="/dev/signup" class="btn-primary-gradient btn-lift">
+				Join as Developer
+			</a>
+			<a href="/sponsor/signup" class="inline-flex items-center justify-center px-6 py-3 border border-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-200 hover:border-gray-500">
+				Join as Sponsor
+			</a>
+		</div>
 		</div>
 	</div>
 </div>

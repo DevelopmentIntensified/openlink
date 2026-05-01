@@ -114,4 +114,44 @@ export const bountyContributionsRelations = relations(bountyContributions, ({ on
 	})
 }));
 
+// DevTeams for project collaboration
+export const devteams = sqliteTable("devteams", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	description: text("description"),
+	projectId: text("projectId").references(() => projects.id, { onDelete: "cascade" }),
+	ownerId: text("ownerId").notNull().references(() => users.id),
+	createdAt: integer("createdAt", { mode: "timestamp" }).notNull()
+});
+
+export const devteamMembers = sqliteTable("devteam_members", {
+	id: text("id").primaryKey(),
+	devteamId: text("devteamId").notNull().references(() => devteams.id, { onDelete: "cascade" }),
+	userId: text("userId").notNull().references(() => users.id),
+	joinedAt: integer("joinedAt", { mode: "timestamp" }).notNull()
+});
+
+export const devteamsRelations = relations(devteams, ({ one, many }) => ({
+	owner: one(users, {
+		fields: [devteams.ownerId],
+		references: [users.id]
+	}),
+	project: one(projects, {
+		fields: [devteams.projectId],
+		references: [projects.id]
+	}),
+	members: many(devteamMembers)
+}));
+
+export const devteamMembersRelations = relations(devteamMembers, ({ one }) => ({
+	devteam: one(devteams, {
+		fields: [devteamMembers.devteamId],
+		references: [devteams.id]
+	}),
+	user: one(users, {
+		fields: [devteamMembers.userId],
+		references: [users.id]
+	})
+}));
+
 export * from './auth.schema';

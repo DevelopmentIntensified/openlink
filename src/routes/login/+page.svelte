@@ -64,11 +64,12 @@
 				</button>
 			</form>
 
-			<p class="text-center text-sm text-gray-500 mt-6">
-				Don't have an account? <a href="/auth/signup" class="font-semibold text-amber-600 hover:text-amber-700">
-					Sign up
-				</a>
-			</p>
+		<p class="text-center text-sm text-gray-500 mt-6">
+			Don't have an account?<br />
+			<a href="/dev/signup" class="font-semibold text-amber-600 hover:text-amber-700">Join as Developer</a>
+			<span class="text-gray-300 mx-2">|</span>
+			<a href="/sponsor/signup" class="font-semibold text-blue-600 hover:text-blue-700">Join as Sponsor</a>
+		</p>
 		</div>
 	</div>
 </div>

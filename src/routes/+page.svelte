@@ -26,10 +26,13 @@
 			</p>
 			
 			<div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
-				<a href="/auth/signup" class="btn-primary-gradient text-base px-8 py-3 btn-lift">
-					Get Started Free
-				</a>
-			</div>
+			<a href="/dev/signup" class="btn-primary-gradient text-base px-8 py-3 btn-lift">
+				Join as Developer
+			</a>
+			<a href="/sponsor/signup" class="btn-secondary-gradient text-base px-8 py-3 btn-lift">
+				Join as Sponsor
+			</a>
+		</div>
 		</div>
 	</div>
 	

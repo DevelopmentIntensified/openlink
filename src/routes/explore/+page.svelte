@@ -22,6 +22,10 @@
 	<div class="mb-10">
 		<h1 class="text-3xl font-bold text-gray-900 mb-2">Explore Projects</h1>
 		<p class="text-gray-500">Discover open source projects looking for contributors</p>
+	<div class="flex gap-4 mt-4">
+		<a href="/dev/signup" class="btn-primary">Join as Developer</a>
+		<a href="/sponsor/signup" class="btn-outline">Join as Sponsor</a>
+	</div>
 	</div>
 	
 	<!-- Search & Filter -->

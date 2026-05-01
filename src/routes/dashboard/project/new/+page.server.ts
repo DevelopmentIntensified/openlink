@@ -1,59 +1,39 @@
-import { redirect, fail } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
-import { createProject } from '$lib/server/lib/projects';
-
-export const load: PageServerLoad = async (event) => {
-	const session = await event.locals.session;
-	
-	if (!session) {
-		throw redirect(302, '/login');
-	}
-	
-	return {
-		user: event.locals.user
-	};
-};
+import { fail, redirect } from '@sveltejs/kit';
+import type { Actions } from './$types';
+import { createProject } from '$lib/server/projects/project-logic';
 
 export const actions: Actions = {
-	default: async (event) => {
-		const session = event.locals.session;
-		
-		if (!session) {
-			throw redirect(302, '/login');
+	default: async ({ request, locals }) => {
+		const user = locals.user;
+
+		if (!user) {
+			return fail(401, { error: 'You must be logged in to create a project' });
 		}
-		
-		const formData = await event.request.formData();
-		const name = formData.get('name')?.toString() || '';
-		const description = formData.get('description')?.toString() || '';
-		const repoUrl = formData.get('repoUrl')?.toString() || '';
-		const website = formData.get('website')?.toString() || '';
-		const category = formData.get('category')?.toString() || 'other';
-		const type = (formData.get('type')?.toString() || 'individual') as 'community' | 'team' | 'individual';
-		const isBountyEnabled = formData.get('isBountyEnabled') === 'on';
-		
+
+		const data = await request.formData();
+		const name = data.get('name') as string;
+		const description = data.get('description') as string;
+		const repoUrl = data.get('repoUrl') as string;
+		const website = data.get('website') as string;
+		const category = data.get('category') as string;
+		const type = data.get('type') as string;
+		const isBountyEnabled = data.get('isBountyEnabled') === 'on';
+
 		if (!name) {
 			return fail(400, { error: 'Project name is required' });
 		}
-		
-		try {
-			const projectId = await createProject({
-				name,
-				description: description || undefined,
-				repoUrl: repoUrl || undefined,
-				website: website || undefined,
-				category,
-				type,
-				isBountyEnabled,
-				ownerId: session.userId
-			});
-			
-			throw redirect(303, `/project/${projectId}`);
-		} catch (error) {
-			if (error instanceof Response && error.status === 303) {
-				throw error;
-			}
-			console.error('Error creating project:', error);
-			return fail(500, { error: 'Failed to create project' });
-		}
+
+		const project = createProject({
+			name,
+			description: description || undefined,
+			repoUrl: repoUrl || undefined,
+			website: website || undefined,
+			category: category as any,
+			ownerId: user.id,
+			type: type as any,
+			isBountyEnabled
+		});
+
+		throw redirect(303, `/project/${project.id}`);
 	}
 };

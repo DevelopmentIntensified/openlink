@@ -69,10 +69,10 @@
 						{/if}
 						<span class="text-sm font-medium text-gray-700">{user.name}</span>
 					</a>
-				{:else}
-					<a href="/login" class="btn-ghost">Sign in</a>
-					<a href="/auth/signup" class="btn-primary-gradient btn-lift">Get Started</a>
-				{/if}
+		{:else}
+				<a href="/dev/signup" class="btn-ghost text-sm">Dev</a>
+				<a href="/sponsor/signup" class="btn-primary-gradient text-sm btn-lift">Sponsor</a>
+			{/if}
 			</div>
 		</div>
 	</div>
