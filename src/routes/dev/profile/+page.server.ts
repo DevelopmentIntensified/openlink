@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import { auth } from '$lib/server/auth';
 import { redirect } from '@sveltejs/kit';
 import type { UserWithRoles } from '$lib/server/rbac';
-import { getOnboardingStatus, getRoles } from '$lib/server/rbac';
+import { getRoles } from '$lib/server/rbac';
 
 export const load: PageServerLoad = async ({ request }) => {
 	const session = await auth.api.getSession({
@@ -20,14 +20,11 @@ export const load: PageServerLoad = async ({ request }) => {
 		throw redirect(302, '/auth/signup?role=dev');
 	}
 
-	// Get onboarding status and roles on server
-	const onboardingStatus = getOnboardingStatus(user);
+	// Get roles on server
 	const roles = getRoles(user);
 
 	return {
 		user,
-		onboardingComplete: onboardingStatus.onboardingComplete,
-		roles,
-		hasProjects: roles.includes('dev')
+		roles
 	};
 };

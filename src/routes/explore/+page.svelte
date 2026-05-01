@@ -1,11 +1,20 @@
 <script lang="ts">
-	let { data } = $props();
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
 	let projects = $derived(data.projects);
 	let search = $derived(data.search);
 	let category = $derived(data.category);
-	
-	let searchValue = $state(search || '');
-	let selectedCategory = $state(category || '');
+
+	let searchValue = $state('');
+	let selectedCategory = $state('');
+
+	// Update state when data changes
+	$effect(() => {
+		searchValue = data.search || '';
+		selectedCategory = data.category || '';
+	});
 </script>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

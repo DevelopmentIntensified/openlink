@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { getSignupRole } from '$lib/server/rbac/signup-logic';
-	import type { SignupData } from '$lib/server/rbac/signup-logic';
+	import { getSignupRole } from '$lib/shared/signup-utils';
+	import type { SignupData } from '$lib/shared/signup-utils';
 
-	let email = '';
-	let password = '';
-	let name = '';
-	let errors: string[] = [];
+	let email = $state('');
+	let password = $state('');
+	let name = $state('');
+	let errors: string[] = $state([]);
 
-	$: role = getSignupRole('/sponsor/signup');
+	let role = $derived(getSignupRole('/sponsor/signup'));
 
 	async function handleSubmit() {
 		const data: SignupData = {
@@ -33,7 +33,7 @@
 
 <div class="signup-container">
 	<h1>Sign up as Sponsor</h1>
-	<form on:submit|preventDefault={handleSubmit}>
+	<form onsubmit={handleSubmit}>
 		<div>
 			<label for="name">Name</label>
 			<input id="name" bind:value={name} type="text" required />

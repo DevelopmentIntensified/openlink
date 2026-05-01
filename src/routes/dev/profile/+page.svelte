@@ -1,60 +1,48 @@
 <script lang="ts">
-	import type { UserWithRoles } from '$lib/server/rbac';
-	import { getRoles } from '$lib/server/rbac';
-	import { prepareProfileUpdate } from '$lib/server/dev/profile-logic';
+	import { type PageData } from './$types';
 
-	export let data: { user: UserWithRoles };
-	let bio = data.user?.bio || '';
-	let skills = data.user?.skills ? JSON.parse(data.user.skills) : [];
-	let githubUrl = data.user?.githubUrl || '';
-	let newSkill = '';
-	let message = '';
-	let error = '';
+	let { data }: { data: PageData } = $props();
 
-	$: user = data.user;
-	$: userRoles = user ? getRoles(user) : [];
+	let user = $derived(data.user);
+	let roles = $derived(data.roles || []);
 
-	function addSkill() {
-		if (newSkill.trim() && !skills.includes(newSkill.trim())) {
-			skills = [...skills, newSkill.trim()];
-			newSkill = '';
+	// Initialize state
+	let bio = $state('');
+	let skills = $state<string[]>([]);
+	let githubUrl = $state('');
+	let newSkill = $state('');
+	let message = $state('');
+	let error = $state('');
+
+	// Set initial values from user data
+	$effect(() => {
+		if (data.user) {
+			bio = data.user.bio || '';
+			skills = data.user.skills || [];
+			githubUrl = data.user.githubUrl || '';
 		}
-	}
+	});
 
-	function removeSkill(skill: string) {
-		skills = skills.filter((s: string) => s !== skill);
-	}
-
-	async function handleSubmit() {
-		const profileData = {
-			bio,
-			skills,
-			githubUrl
-		};
-
-		const update = prepareProfileUpdate(profileData);
-
-		try {
-			const response = await fetch('/api/dev/profile', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(update)
-			});
-
-			const result = await response.json();
-
-			if (result.success) {
-				message = 'Profile updated successfully!';
-				error = '';
-			} else {
-				error = result.message || 'Failed to update profile';
-				message = '';
-			}
-		} catch (e) {
-			error = 'Failed to update profile';
-			message = '';
+	// Update githubUrl when user data changes
+	$effect(() => {
+		if (data.user?.githubUrl) {
+			githubUrl = data.user.githubUrl;
 		}
-	}
+	});
+
+	// Update skills when user data changes
+	$effect(() => {
+		if (data.user?.skills) {
+			skills = data.user.skills;
+		}
+	});
+
+	// Update bio when user data changes
+	$effect(() => {
+		if (data.user?.bio) {
+			bio = data.user.bio;
+		}
+	});
 </script>
 
 <div class="profile-container">
@@ -67,7 +55,7 @@
 		<div class="error">{error}</div>
 	{/if}
 
-	<form on:submit|preventDefault={handleSubmit}>
+	<form onsubmit={handleSubmit}>
 		<div class="form-group">
 			<label for="bio">Bio</label>
 			<textarea id="bio" bind:value={bio} rows="4" placeholder="Tell us about yourself..."></textarea>
@@ -81,14 +69,14 @@
 		<div class="form-group">
 			<label for="skills">Skills</label>
 			<div class="skill-input">
-				<input id="skills" bind:value={newSkill} type="text" placeholder="Add a skill..." on:keydown={(e) => e.key === 'Enter' && addSkill()} />
-				<button type="button" on:click={addSkill}>Add</button>
+				<input id="skills" bind:value={newSkill} type="text" placeholder="Add a skill..." onkeydown={(e) => e.key === 'Enter' && addSkill()} />
+				<button type="button" onclick={addSkill}>Add</button>
 			</div>
 			<div class="skill-list">
 				{#each skills as skill}
 					<span class="skill-tag">
 						{skill}
-						<button type="button" on:click={() => removeSkill(skill)}>×</button>
+						<button type="button" onclick={() => removeSkill(skill)}>×</button>
 					</span>
 				{/each}
 			</div>

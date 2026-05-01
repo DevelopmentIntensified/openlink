@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { UserWithRoles } from '$lib/server/rbac';
-	import { getRoles } from '$lib/server/rbac';
+	import { type PageData } from './$types';
 
-	export let data: { user: UserWithRoles };
+	let { data }: { data: PageData } = $props();
 
-	$: user = data.user;
-	$: roles = user ? getRoles(user) : [];
-	$: isSponsor = roles.includes('sponsor');
+	let user = $derived(data.user);
+	let roles = $derived(data.roles || []);
+	let isSponsor = $derived(data.isSponsor || false);
 </script>
 
 <div class="dashboard">

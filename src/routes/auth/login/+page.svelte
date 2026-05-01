@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { auth } from '$lib/server/auth';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 
-	let email = '';
-	let password = '';
-	let error = '';
-	let showRoleSelection = false;
-	let userRoles: string[] = [];
+	let email = $state('');
+	let password = $state('');
+	let error = $state('');
+	let showRoleSelection = $state(false);
+	let userRoles: string[] = $state([]);
 
 	async function handleLogin() {
 		try {
@@ -49,7 +48,7 @@
 	<h1>Login to BountyForge</h1>
 
 	{#if !showRoleSelection}
-		<form on:submit|preventDefault={handleLogin}>
+		<form onsubmit={handleLogin}>
 			<div>
 				<label for="email">Email</label>
 				<input id="email" bind:value={email} type="email" required />
@@ -69,10 +68,10 @@
 			<h2>Select your role</h2>
 			<p>You have multiple roles. Which dashboard do you want to access?</p>
 			{#if userRoles.includes('dev')}
-				<button on:click={() => selectRole('dev')}>Continue as Developer</button>
+				<button onclick={() => selectRole('dev')}>Continue as Developer</button>
 			{/if}
 			{#if userRoles.includes('sponsor')}
-				<button on:click={() => selectRole('sponsor')}>Continue as Sponsor</button>
+				<button onclick={() => selectRole('sponsor')}>Continue as Sponsor</button>
 			{/if}
 		</div>
 	{/if}

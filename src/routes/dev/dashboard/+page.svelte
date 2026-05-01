@@ -1,14 +1,12 @@
 <script lang="ts">
-	import type { UserWithRoles } from '$lib/server/rbac';
-	import { getRoles, getOnboardingStatus } from '$lib/server/rbac';
-	import { shouldShowOnboarding } from '$lib/server/dev/profile-logic';
+	import { type PageData } from './$types';
 
-	export let data: { user: UserWithRoles };
+	let { data }: { data: PageData } = $props();
 
-	$: user = data.user;
-	$: roles = user ? getRoles(user) : [];
-	$: hasProjects = roles.includes('dev'); // Dev role has projects
-	$: showOnboarding = user ? shouldShowOnboarding(user) : false;
+	let user = $derived(data.user);
+	let roles = $derived(data.roles || []);
+	let hasProjects = $derived(data.hasProjects || false);
+	let showOnboarding = $derived(!data.onboardingComplete);
 
 	function dismissOnboarding() {
 		showOnboarding = false;
@@ -26,7 +24,7 @@
 				<h2>Complete Your Profile</h2>
 				<p>Add your bio, GitHub profile, and skills to get started.</p>
 				<p><a href="/dev/profile" class="btn">Complete Profile</a></p>
-				<button on:click={dismissOnboarding} class="skip-btn">Skip for now</button>
+				<button onclick={dismissOnboarding} class="skip-btn">Skip for now</button>
 			</div>
 		</div>
 	{/if}
