@@ -79,6 +79,18 @@ export const authConfig = {
 		onboardingComplete: {
 			type: 'boolean',
 			defaultValue: false
+		},
+		companyName: {
+			type: 'string',
+			defaultValue: ''
+		},
+		companyWebsite: {
+			type: 'string',
+			defaultValue: ''
+		},
+		companyDescription: {
+			type: 'string',
+			defaultValue: ''
 		}
 	}
 };
