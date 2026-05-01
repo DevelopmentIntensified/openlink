@@ -2,6 +2,7 @@ import type { User } from 'better-auth';
 
 export type UserWithRoles = User & {
 	roles?: string[] | undefined;
+	onboardingComplete?: boolean;
 };
 
 const DEFAULT_ROLES = ['dev'] as const;
@@ -47,4 +48,23 @@ export function requireRole(
 
 	event.locals.user = user;
 	return true;
+}
+
+/**
+ * Get onboarding status from user
+ * Deep implementation: checks onboardingComplete field with defaults
+ */
+export function getOnboardingStatus(user: any): { onboardingComplete: boolean } {
+	return {
+		onboardingComplete: user?.onboardingComplete || false
+	};
+}
+
+/**
+ * Check if onboarding modal should be shown
+ * Deep implementation: show if not completed
+ */
+export function shouldShowOnboarding(user: any): boolean {
+	const status = getOnboardingStatus(user);
+	return !status.onboardingComplete;
 }

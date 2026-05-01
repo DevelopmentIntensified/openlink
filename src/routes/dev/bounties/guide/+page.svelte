@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { UserWithRoles } from '$lib/server/rbac';
-	export let data: { user: UserWithRoles };
+	import { type PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+	let user = $derived(data.user as UserWithRoles);
 </script>
 
 <div class="guide-container">

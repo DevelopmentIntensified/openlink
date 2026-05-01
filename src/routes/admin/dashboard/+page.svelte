@@ -1,18 +1,18 @@
 <script lang="ts">
 	import type { UserWithRoles } from '$lib/server/rbac';
-	import { isAdmin } from '$lib/server/rbac/admin';
+	import type { PageData } from './$types';
 
-	export let data: { user: UserWithRoles; stats?: any };
+	let { data }: { data: PageData } = $props();
 
-	$: user = data.user;
-	$: admin = isAdmin(user);
+	let user = $derived(data.user as UserWithRoles);
+	let isAdmin = $derived(data.user?.roles?.includes('admin') || false);
 </script>
 
 <div class="dashboard">
 	<h1>Admin Dashboard</h1>
 	<p>Welcome, {user?.name || 'Admin'}!</p>
 
-	{#if !admin}
+	{#if !isAdmin}
 		<p class="error">Access denied. Admin role required.</p>
 	{:else}
 		<div class="dashboard-grid">

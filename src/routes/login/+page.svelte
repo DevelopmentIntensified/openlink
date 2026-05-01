@@ -5,7 +5,7 @@
 	<div class="w-full max-w-md">
 		<div class="card p-8">
 			<div class="text-center mb-8">
-				<a href="/" class="inline-flex items-center gap-2 mb-6">
+				<a href="/" class="inline-flex items-center gap-2 mb-6" aria-label="BountyForge Home">
 					<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
 						<svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none">
 							<rect x="10" y="3" width="4" height="14" rx="1" fill="currentColor"/>
