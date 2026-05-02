@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let isAnnual = $state(false);
 	let showCalculator = $state(false);
 	let bountyAmount = $state(1000);
 	let estimatedSavings = $derived(bountyAmount * 0.05); // 5% platform fee savings vs competitors
 
 	let comparisonData = [
-		{ feature: 'Platform Fee (Sponsors)', bountyforge: '5%', competitors: '10-20%', savings: 'Save 50-75%' },
-		{ feature: 'Fee for Developers', bountyforge: '0%', competitors: '5-10%', savings: 'Keep 100%' },
-		{ feature: 'Escrow Protection', bountyforge: '✅', competitors: '❌', savings: 'Secure' },
-		{ feature: 'Milestone Tracking', bountyforge: '✅', competitors: 'Limited', savings: 'Transparent' },
-		{ feature: 'Dispute Resolution', bountyforge: '✅', competitors: '❌', savings: 'Protected' },
-		{ feature: 'Instant Payouts', bountyforge: '✅', competitors: 'Delayed', savings: 'Fast' }
+		{ feature: 'Platform Fee (Sponsors)', bountyforge: '5%', competitors: '5-12% (Algora/Gitcoin)', savings: 'Competitive' },
+		{ feature: 'Fee for Developers', bountyforge: '0%', competitors: '0% (Algora/Opire)', savings: 'Keep 100%' },
+		{ feature: 'Escrow Protection', bountyforge: '✅', competitors: '✅ (Resolvr/Gitcoin)', savings: 'Secure' },
+		{ feature: 'Payment Method', bountyforge: 'Stripe (Fiat)', competitors: 'Crypto (Gitcoin)', savings: 'Easy access' },
+		{ feature: 'Instant Payouts', bountyforge: '✅', competitors: 'Delayed (some)', savings: 'Fast' },
+		{ feature: 'GitHub Integration', bountyforge: '✅ Native', competitors: 'Limited', savings: 'Seamless' }
 	];
 
 	let faqOpen = $state<number[]>([]);
@@ -42,30 +41,10 @@
 			</p>
 		</div>
 
-		<!-- Pricing Toggle -->
-		<div class="flex items-center justify-center gap-4 mb-12 animate-fade-in-up delay-100">
-			<span class="text-sm font-medium {!isAnnual ? 'text-gray-900' : 'text-gray-500'}">Monthly</span>
-		<button
-			type="button"
-			onclick={() => isAnnual = !isAnnual}
-			aria-label="Toggle annual billing"
-			class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 {isAnnual ? 'bg-amber-600' : 'bg-gray-200'}"
-			>
-				<input type="hidden" name="isAnnual" value={isAnnual ? 'true' : 'false'} />
-				<span
-					class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 {isAnnual ? 'translate-x-6' : 'translate-x-1'}"
-				></span>
-			</button>
-			<div class="flex items-center gap-2">
-				<span class="text-sm font-medium {isAnnual ? 'text-gray-900' : 'text-gray-500'}">Annual</span>
-				<span class="badge badge-green text-xs">Save 20%</span>
-			</div>
-		</div>
-
 		<!-- Pricing Cards -->
 		<div class="grid md:grid-cols-2 gap-8 mb-16">
-			<!-- For Sponsors -->
-			<div class="card p-8 relative overflow-hidden group animate-scale-in">
+		<!-- For Sponsors -->
+		<div class="card p-8 relative overflow-hidden group animate-scale-in">
 				<div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 				<div class="relative">
 					<div class="flex items-center gap-3 mb-4">
@@ -77,11 +56,8 @@
 						<h2 class="text-xl font-bold text-gray-900">For Sponsors</h2>
 					</div>
 					<div class="mb-6">
-						<span class="text-4xl font-bold text-gray-900">{isAnnual ? '4%' : '5%'}</span>
+						<span class="text-4xl font-bold text-gray-900">5%</span>
 						<span class="text-gray-500"> per transaction</span>
-						{#if isAnnual}
-							<div class="text-sm text-gray-500 mt-1">Billed annually (save 20%)</div>
-						{/if}
 					</div>
 					<ul class="space-y-3 mb-8">
 						<li class="flex items-center gap-2 text-gray-600">
@@ -124,11 +100,8 @@
 				</div>
 			</div>
 
-			<!-- For Developers -->
-			<div class="card p-8 relative overflow-hidden group border-2 border-amber-500 animate-scale-in delay-100">
-				<div class="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
-					Most Popular
-				</div>
+		<!-- For Developers -->
+		<div class="card p-8 relative overflow-hidden group border-2 border-amber-500 animate-scale-in delay-100">
 				<div class="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 				<div class="relative">
 					<div class="flex items-center gap-3 mb-4">
@@ -264,7 +237,7 @@
 			{ q: 'How does the 5% fee work?', a: 'When a sponsor funds a bounty, 5% of the funded amount is retained by BountyForge. The rest goes to the developer upon completion. For example, if a bounty is funded for $1000, the developer receives $950.' },
 			{ q: 'Why is it free for developers?', a: 'We believe developers should keep 100% of their earnings. Our revenue comes from sponsors who find value in the platform. This aligns our incentives with getting work done.' },
 			{ q: 'How are payments protected?', a: 'Funds are held in escrow until work is completed and approved by the sponsor. This protects both parties. If there\'s a dispute, our resolution process ensures fair outcomes.' },
-			{ q: 'Can I upgrade or downgrade?', a: 'Pricing is per-transaction, so there are no subscriptions to manage. Just post bounties as needed, and only pay the 5% fee when you fund them.' }
+			{ q: 'Can I post bounties as needed?', a: 'Pricing is per-transaction, so there are no subscriptions to manage. Just post bounties as needed, and only pay the 5% fee when you fund them.' }
 		] as faq, i}
 				<div class="card p-6">
 					<button
