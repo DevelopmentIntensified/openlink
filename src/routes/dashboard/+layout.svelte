@@ -23,6 +23,12 @@
 						<a href="/dashboard" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
 							Dashboard
 						</a>
+						<a href="/dashboard/projects" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+							Projects
+						</a>
+						<a href="/dashboard/devteams" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+							Teams
+						</a>
 						<a href="/explore" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
 							Explore
 						</a>
