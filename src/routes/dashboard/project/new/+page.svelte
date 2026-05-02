@@ -210,6 +210,7 @@
 						<button
 							type="button"
 							onclick={() => isBountyEnabled = !isBountyEnabled}
+							aria-label="Toggle bounty funding"
 							class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 {isBountyEnabled ? 'bg-amber-600' : 'bg-gray-200'}"
 						>
 							<input type="hidden" name="isBountyEnabled" value={isBountyEnabled ? 'on' : ''} />
