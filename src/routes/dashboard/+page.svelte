@@ -4,7 +4,6 @@
 	let { data } = $props();
 	let userProjects = $derived(data.userProjects || []);
 	let userBounties = $derived(data.userBounties || []);
-	let showUserMenu = $state(false);
 </script>
 
 {#if data.user}

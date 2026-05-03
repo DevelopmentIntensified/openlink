@@ -1,7 +1,21 @@
 <script lang="ts">
 	import '../../app.css';
+	import { onMount } from 'svelte';
 	let { children, data } = $props();
 	let user = $derived(data?.session?.user);
+	let showUserMenu = $state(false);
+
+	// Close dropdown when clicking outside
+	onMount(() => {
+		const handleClick = (e: MouseEvent) => {
+			const target = e.target as HTMLElement;
+			if (!target.closest('.user-menu-container')) {
+				showUserMenu = false;
+			}
+		};
+		document.addEventListener('click', handleClick);
+		return () => document.removeEventListener('click', handleClick);
+	});
 </script>
 
 <div class="min-h-screen bg-gray-50">
@@ -37,7 +51,7 @@
 					</nav>
 				</div>
 
-				<div class="flex items-center gap-3 relative">
+				<div class="flex items-center gap-3 relative user-menu-container">
 					{#if user}
 						<button
 							onclick={() => showUserMenu = !showUserMenu}
