@@ -551,7 +551,7 @@
 	</section>
 </div>
 
-<script context="module">
+<script module>
 	let faqOpen = $state<number[]>([]);
 
 	function toggleFaq(index: number) {

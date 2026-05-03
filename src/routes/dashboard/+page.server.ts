@@ -4,7 +4,9 @@ import { projects, bounties } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load = async (event) => {
-	const session = await event.locals.auth.api.getSession({ headers: event.request.headers });
+	const session = await event.locals.auth?.api.getSession({
+		headers: event.request.headers
+	}) ?? await event.locals.user;
 
 	if (!session?.user) {
 		return {
@@ -18,6 +20,7 @@ export const load = async (event) => {
 		.select()
 		.from(projects)
 		.where(eq(projects.ownerId, session.user.id));
+
 	const userBounties = await db
 		.select()
 		.from(bounties)

@@ -27,28 +27,30 @@
 	<title>BountyForge - OSS Bounty Platform</title>
 </svelte:head>
 
-<nav class="sticky top-0 z-50 glass border-b border-gray-200/50">
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 shadow-sm">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between h-16">
 			<div class="flex items-center gap-10">
-				<a href="/" class="flex items-center gap-2">
-					<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-						<svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
-							<rect x="10" y="3" width="4" height="14" rx="1" fill="currentColor"/>
-							<rect x="7" y="3" width="10" height="4" rx="1" fill="currentColor"/>
+				<a href="/" class="flex items-center gap-2 group">
+					<div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300">
+						<svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M4 16h16l-2 4H6l-2-4z" fill="currentColor"/>
+							<rect x="9" y="12" width="6" height="4" fill="currentColor" opacity="0.7"/>
+							<path d="M8 8L4 12l4 4" stroke-width="1.5"/>
+							<path d="M16 8l4 4-4 4" stroke-width="1.5"/>
 						</svg>
 					</div>
 					<span class="text-xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">BountyForge</span>
 				</a>
 				<div class="hidden sm:flex items-center gap-1">
-					<a href="/explore" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-200">
+					<a href="/explore" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-amber-50 rounded-lg transition-all duration-200">
 						Explore
 					</a>
-					<a href="/about" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-200">
+					<a href="/about" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-amber-50 rounded-lg transition-all duration-200">
 						About
 					</a>
 					{#if user}
-						<a href="/dashboard" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-200">
+						<a href="/dashboard" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-amber-50 rounded-lg transition-all duration-200">
 							Dashboard
 						</a>
 					{/if}
@@ -84,15 +86,17 @@
 		<div class="flex flex-col sm:flex-row justify-between items-center gap-4">
 			<div class="flex items-center gap-2">
 				<div class="w-6 h-6 rounded bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-					<svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none">
-						<rect x="10" y="3" width="4" height="14" rx="1" fill="currentColor"/>
-						<rect x="7" y="3" width="10" height="4" rx="1" fill="currentColor"/>
+					<svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M4 16h16l-2 4H6l-2-4z" fill="currentColor"/>
+						<rect x="9" y="12" width="6" height="4" fill="currentColor" opacity="0.7"/>
+						<path d="M8 8L4 12l4 4" stroke-width="1.5"/>
+						<path d="M16 8l4 4-4 4" stroke-width="1.5"/>
 					</svg>
 				</div>
 				<span class="text-sm text-gray-500">BountyForge</span>
 			</div>
 			<div class="flex items-center gap-6 text-sm text-gray-500">
-				<a href="/pricing" class="hover:text-gray-900 transition">Pricing</a>
+				<a href="/about" class="hover:text-gray-900 transition">About</a>
 				<a href="/legal/terms" class="hover:text-gray-900 transition">Terms</a>
 				<a href="/legal/privacy" class="hover:text-gray-900 transition">Privacy</a>
 			</div>
