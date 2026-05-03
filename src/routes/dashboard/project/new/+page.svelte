@@ -11,6 +11,7 @@
 	let category = $state('web');
 	let type = $state('individual');
 	let isBountyEnabled = $state(false);
+	let isSubmitting = $state(false);
 	
 	let categories = [
 		{ value: 'web', label: 'Web Development', icon: '🌐' },
