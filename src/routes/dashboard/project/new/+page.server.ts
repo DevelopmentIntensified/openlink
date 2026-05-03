@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { createProject } from '$lib/server/projects/project-logic';
+import { createProject } from '$lib/server/lib/projects';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
@@ -23,7 +23,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Project name is required' });
 		}
 
-		const project = createProject({
+		const projectId = await createProject({
 			name,
 			description: description || undefined,
 			repoUrl: repoUrl || undefined,
@@ -34,6 +34,6 @@ export const actions: Actions = {
 			isBountyEnabled
 		});
 
-		throw redirect(303, `/project/${project.id}`);
+		throw redirect(303, `/project/${projectId}`);
 	}
 };

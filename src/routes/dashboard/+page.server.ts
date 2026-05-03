@@ -4,9 +4,10 @@ import { projects, bounties } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load = async (event) => {
-	const session = await event.locals.auth?.api.getSession({
+	// Use event.locals.auth exposed by hooks
+	const session = await event.locals.auth.api.getSession({
 		headers: event.request.headers
-	}) ?? await event.locals.user;
+	});
 
 	if (!session?.user) {
 		return {

@@ -10,19 +10,6 @@
 {#if data.user}
 	<div class="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50 py-8 px-4">
 		<div class="max-w-7xl mx-auto">
-			<!-- Header -->
-			<div class="relative mb-12 animate-fade-in-up">
-				<div class="text-center">
-					<div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center animate-float">
-						<svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-							<path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
-						</svg>
-					</div>
-					<h1 class="text-4xl font-bold text-gray-900 mb-4">Dashboard</h1>
-					<p class="text-xl text-gray-600">Manage your projects and bounties</p>
-				</div>
-			</div>
-
 			<!-- Stats Bar -->
 			<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
 				<div class="card p-6 animate-scale-in" style="animation-delay: 0.1s;">

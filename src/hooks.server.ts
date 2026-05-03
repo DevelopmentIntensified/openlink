@@ -8,6 +8,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return resolve(event);
 	}
 
+	// Expose auth to all routes
+	event.locals.auth = auth;
+
 	// Get session and user
 	const session = await auth.api.getSession({
 		headers: event.request.headers
