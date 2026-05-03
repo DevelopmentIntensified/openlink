@@ -68,7 +68,6 @@
 
 			<!-- Form Card -->
 			<form
-				method="POST"
 				use:enhance
 				class="card p-8 space-y-6 animate-scale-in"
 				onsubmit={handleSubmit}
