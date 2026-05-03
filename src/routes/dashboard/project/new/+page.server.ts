@@ -11,6 +11,7 @@ export const actions: Actions = {
 		}
 
 		const data = await request.formData();
+		
 		const name = data.get('name') as string;
 		const description = data.get('description') as string;
 		const repoUrl = data.get('repoUrl') as string;
@@ -23,17 +24,55 @@ export const actions: Actions = {
 			return fail(400, { error: 'Project name is required' });
 		}
 
-		const projectId = await createProject({
-			name,
-			description: description || undefined,
-			repoUrl: repoUrl || undefined,
-			website: website || undefined,
-			category: category as any,
-			ownerId: user.id,
-			type: type as any,
-			isBountyEnabled
-		});
+		try {
+			const projectId = await createProject({
+				name,
+				description: description || undefined,
+				repoUrl: repoUrl || undefined,
+				website: website || undefined,
+				category: category as any,
+				ownerId: user.id,
+				type: type as any,
+				isBountyEnabled
+			});
+			throw redirect(303, `/project/${projectId}`);
+		} catch (error) {
+			console.error('Error creating project:', error);
+			if (error instanceof Error && error.message.includes('redirect')) throw error;
+			return fail(500, { error: 'Failed to create project' });
+		}
+	},
 
-		throw redirect(303, `/project/${projectId}`);
+	create: async ({ request, locals }) => {
+		const user = locals.user;
+
+		if (!user) {
+			return fail(401, { error: 'You must be logged in to create a project' });
+		}
+
+		const body = await request.json();
+		
+		const { name, description, repoUrl, website, category, type, isBountyEnabled } = body;
+
+		if (!name) {
+			return fail(400, { error: 'Project name is required' });
+		}
+
+		try {
+			const projectId = await createProject({
+				name,
+				description: description || undefined,
+				repoUrl: repoUrl || undefined,
+				website: website || undefined,
+				category: category || 'other',
+				ownerId: user.id,
+				type: type || 'individual',
+				isBountyEnabled: !!isBountyEnabled
+			});
+			return { projectId };
+		} catch (error) {
+			console.error('Error creating project:', error);
+			return fail(500, { error: 'Failed to create project' });
+		}
 	}
 };

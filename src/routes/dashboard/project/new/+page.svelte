@@ -1,10 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-
+	
 	let { data }: { data: PageData } = $props();
-
+	
 	let name = $state('');
 	let description = $state('');
 	let repoUrl = $state('');
@@ -12,8 +11,7 @@
 	let category = $state('web');
 	let type = $state('individual');
 	let isBountyEnabled = $state(false);
-	let isSubmitting = $state(false);
-
+	
 	let categories = [
 		{ value: 'web', label: 'Web Development', icon: '🌐' },
 		{ value: 'mobile', label: 'Mobile', icon: '📱' },
@@ -24,16 +22,32 @@
 		{ value: 'security', label: 'Security', icon: '🔒' },
 		{ value: 'other', label: 'Other', icon: '📦' }
 	];
-
+	
 	let types = [
 		{ value: 'individual', label: 'Solo Developer', desc: 'Just you working on this project' },
 		{ value: 'team', label: 'Team Project', desc: 'Working with a dev team' },
 		{ value: 'community', label: 'Community', desc: 'Open source community project' }
 	];
-
+	
 	async function handleSubmit() {
-		isSubmitting = true;
-		// Form submission is handled by enhance
+		const response = await fetch('?/create', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				name,
+				description,
+				repoUrl,
+				website,
+				category,
+				type,
+				isBountyEnabled
+			})
+		});
+		
+		if (response.ok) {
+			const result = await response.json();
+			goto(`/project/${result.projectId}`);
+		}
 	}
 </script>
 
@@ -82,7 +96,7 @@
 					</div>
 				</div>
 
-				<!-- Description -->
+	<!-- Description -->
 				<div>
 					<label for="description" class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
 						<svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,6 +112,8 @@
 						class="input resize-none"
 						placeholder="Describe what your project does and what problems it solves..."
 					></textarea>
+					<!-- Hidden input to ensure description is always sent -->
+					<input type="hidden" name="description" value={description} />
 				</div>
 
 				<!-- Two Column Layout -->
