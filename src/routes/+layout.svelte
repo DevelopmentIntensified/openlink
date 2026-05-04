@@ -53,8 +53,25 @@
 						<a href="/dashboard" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-amber-50 rounded-lg transition-all duration-200">
 							Dashboard
 						</a>
-					{/if}
+			{/if}
 				</div>
+			</div>
+			<div class="flex items-center gap-3">
+				{#if user}
+					<a href="/profile/{user.username}" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-all duration-200">
+						{#if user.image}
+							<img src={user.image} alt={user.name} class="h-8 w-8 rounded-full ring-2 ring-amber-200" />
+						{:else}
+							<div class="h-8 w-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white text-sm font-semibold">
+								{user.name?.charAt(0)?.toUpperCase() ?? 'U'}
+							</div>
+						{/if}
+						<span class="text-sm font-medium text-gray-700">{user.name}</span>
+					</a>
+				{:else}
+					<a href="/dev/signup" class="btn-amber text-sm">Dev</a>
+					<a href="/sponsor/signup" class="btn-primary-gradient text-sm btn-lift">Sponsor</a>
+				{/if}
 			</div>
 			<div class="flex items-center gap-3">
 				{#if user}
