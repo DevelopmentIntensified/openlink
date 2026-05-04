@@ -24,20 +24,20 @@ body {
 
 	.btn-primary-gradient {
 		@apply inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98];
-		background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+		background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
 	}
 
 	.btn-primary-gradient:hover {
-		background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%);
+		background: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
 	}
 
 	.btn-amber {
 		@apply inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98];
-		background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+		background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
 	}
 
 	.btn-amber:hover {
-		background: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
+		background: linear-gradient(135deg, #b45309 0%, #c2410c 100%);
 	}
 
 	.btn-secondary {

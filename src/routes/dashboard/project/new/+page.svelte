@@ -35,18 +35,18 @@
 		isSubmitting = true;
 		
 		try {
+			const formData = new FormData();
+			formData.append('name', name);
+			formData.append('description', description);
+			formData.append('repoUrl', repoUrl);
+			formData.append('website', website);
+			formData.append('category', category);
+			formData.append('type', type);
+			formData.append('isBountyEnabled', String(isBountyEnabled));
+			
 			const response = await fetch('?/create', {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					name,
-					description,
-					repoUrl,
-					website,
-					category,
-					type,
-					isBountyEnabled
-				})
+				body: formData
 			});
 			
 			if (response.ok) {

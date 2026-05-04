@@ -10,9 +10,15 @@ export const actions: Actions = {
 			return fail(401, { error: 'You must be logged in to create a project' });
 		}
 
-		const body = await request.json();
+		const data = await request.formData();
 		
-		const { name, description, repoUrl, website, category, type, isBountyEnabled } = body;
+		const name = data.get('name') as string;
+		const description = data.get('description') as string;
+		const repoUrl = data.get('repoUrl') as string;
+		const website = data.get('website') as string;
+		const category = data.get('category') as string;
+		const type = data.get('type') as string;
+		const isBountyEnabled = data.get('isBountyEnabled') === 'true';
 
 		if (!name) {
 			return fail(400, { error: 'Project name is required' });

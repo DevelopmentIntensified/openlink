@@ -1,9 +1,23 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { onMount } from 'svelte';
 	
 	let { children, data } = $props();
 	let user = $derived(data?.user);
+	let showUserMenu = $state(false);
+
+	// Close dropdown when clicking outside
+	onMount(() => {
+		const handleClick = (e: MouseEvent) => {
+			const target = e.target as HTMLElement;
+			if (!target.closest('.user-menu-container')) {
+				showUserMenu = false;
+			}
+		};
+		document.addEventListener('click', handleClick);
+		return () => document.removeEventListener('click', handleClick);
+	});
 </script>
 
 <svelte:head>
@@ -56,9 +70,12 @@
 			{/if}
 				</div>
 			</div>
-			<div class="flex items-center gap-3">
+	<div class="flex items-center gap-3 relative user-menu-container">
 				{#if user}
-					<a href="/profile/{user.username}" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-all duration-200">
+					<button
+						onclick={() => showUserMenu = !showUserMenu}
+						class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+					>
 						{#if user.image}
 							<img src={user.image} alt={user.name} class="h-8 w-8 rounded-full ring-2 ring-amber-200" />
 						{:else}
@@ -67,32 +84,64 @@
 							</div>
 						{/if}
 						<span class="text-sm font-medium text-gray-700">{user.name}</span>
-					</a>
+						<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</button>
+
+					{#if showUserMenu}
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div
+							class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50"
+							role="menu"
+						>
+							<a href="/profile/{user.username}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 transition" role="menuitem">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+								</svg>
+								Profile
+							</a>
+							<a href="/dashboard" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 transition" role="menuitem">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-7-7V3m0 9v7a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+								</svg>
+								Dashboard
+							</a>
+							{#if user.roles?.includes('sponsor')}
+								<a href="/sponsor/dashboard" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 transition" role="menuitem">
+									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+									</svg>
+									Sponsor Dashboard
+								</a>
+							{/if}
+							{#if user.roles?.includes('admin')}
+								<a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 transition" role="menuitem">
+									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.385-1.244 2.145-1.244 2.53 0a1.724 1.724 0 010 1.066c.385 1.244 2.145 1.244 2.53 0m-3.72 2.484c.386-1.244 2.146-1.244 2.53 0a1.724 1.724 0 010 1.066c.385 1.244 2.145 1.244 2.53 0m-4.244-2.242a3.724 3.724 0 00-5.544 0m5.544 0a3.724 3.724 0 01-5.544 0" />
+									</svg>
+									Admin Dashboard
+								</a>
+							{/if}
+							<div class="border-t border-gray-100 mt-2 pt-2">
+								<form method="POST" action="/api/auth/logout" class="w-full">
+									<button type="submit" class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition w-full text-left" role="menuitem">
+										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 20v-2a3 3 0 00-3-3H6a3 3 0 00-3 3v2" />
+										</svg>
+										Sign Out
+									</button>
+								</form>
+							</div>
+						</div>
+					{/if}
 				{:else}
-					<a href="/dev/signup" class="btn-amber text-sm">Dev</a>
+					<a href="/dev/signup" class="btn-ghost text-sm">Dev</a>
 					<a href="/sponsor/signup" class="btn-primary-gradient text-sm btn-lift">Sponsor</a>
 				{/if}
 			</div>
-			<div class="flex items-center gap-3">
-				{#if user}
-					<a href="/profile/{user.username}" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-all duration-200">
-						{#if user.image}
-							<img src={user.image} alt={user.name} class="h-8 w-8 rounded-full ring-2 ring-gray-200" />
-						{:else}
-							<div class="h-8 w-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white text-sm font-semibold">
-								{user.name?.charAt(0)?.toUpperCase() ?? 'U'}
-							</div>
-						{/if}
-						<span class="text-sm font-medium text-gray-700">{user.name}</span>
-					</a>
-		{:else}
-				<a href="/dev/signup" class="btn-ghost text-sm">Dev</a>
-				<a href="/sponsor/signup" class="btn-primary-gradient text-sm btn-lift">Sponsor</a>
-			{/if}
-			</div>
 		</div>
-	</div>
-</nav>
+	</nav>
 
 <main class="min-h-screen">
 	{@render children()}
