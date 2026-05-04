@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { createProject } from '$lib/server/lib/projects';
+import { validateProjectForm, type ProjectFormData, type ProjectFormErrors } from '$lib/server/validation/project';
 
 export const actions: Actions = {
 	create: async ({ request, locals }) => {
@@ -10,31 +11,22 @@ export const actions: Actions = {
 			return fail(401, { error: 'You must be logged in to create a project' });
 		}
 
-		const data = await request.formData();
+		const formData = await request.formData();
+		const { data, errors } = validateProjectForm(formData);
 		
-		const name = data.get('name') as string;
-		const description = data.get('description') as string;
-		const repoUrl = data.get('repoUrl') as string;
-		const website = data.get('website') as string;
-		const category = data.get('category') as string;
-		const type = data.get('type') as string;
-		const isBountyEnabled = data.get('isBountyEnabled') === 'true';
-
-		if (!name) {
-			return fail(400, { error: 'Project name is required' });
+		// Add ownerId from session
+		data.ownerId = user.id;
+		
+		// Check for validation errors
+		const allErrors: ProjectFormErrors = { ...errors };
+		if (!data.name) allErrors.name = 'Project name is required';
+		
+		if (Object.keys(allErrors).length > 0) {
+			return fail(400, { errors: allErrors });
 		}
 
 		try {
-			const projectId = await createProject({
-				name,
-				description: description || undefined,
-				repoUrl: repoUrl || undefined,
-				website: website || undefined,
-				category: category || 'other',
-				ownerId: user.id,
-				type: type || 'individual',
-				isBountyEnabled: !!isBountyEnabled
-			});
+			const projectId = await createProject(data as ProjectFormData);
 			return { projectId };
 		} catch (error) {
 			console.error('Error creating project:', error);
