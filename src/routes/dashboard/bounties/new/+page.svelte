@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { enhance } from '$app/forms';
-
+	import { goto } from '$app/navigation';
+	
 	let { data } = $props();
 	let projects = $derived(data.projects || []);
 
@@ -47,11 +47,43 @@
 		return Object.keys(newErrors).length === 0;
 	}
 
-	function handleSubmit() {
+	async function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		
 		if (!validateForm()) {
 			return;
 		}
+		
 		isSubmitting = true;
+		
+		try {
+			const formData = new FormData();
+			formData.append('title', title);
+			formData.append('description', description);
+			formData.append('amount', String(parseFloat(amountDollars) * 100)); // Convert to cents
+			formData.append('skills', skills);
+			formData.append('priority', priority);
+			formData.append('projectId', projectId);
+			if (deadline) {
+				formData.append('deadline', deadline);
+			}
+			
+			const response = await fetch('?/create', {
+				method: 'POST',
+				body: formData
+			});
+			
+			if (response.ok) {
+				const result = await response.json();
+				goto(`/bounty/${result.bountyId}`);
+			} else {
+				console.error('Form submission failed:', await response.text());
+			}
+		} catch (error) {
+			console.error('Error submitting form:', error);
+		} finally {
+			isSubmitting = false;
+		}
 	}
 
 	// Priority options
@@ -63,12 +95,12 @@
 	];
 
 	// Calculate platform fee (1%)
-	let platformFee = $derived.by(() => {
+	let platformFee = $derived(() => {
 		const amount = parseFloat(amountDollars) || 0;
 		return amount * 0.01;
 	});
 
-	let totalWithFee = $derived.by(() => {
+	let totalWithFee = $derived(() => {
 		const amount = parseFloat(amountDollars) || 0;
 		return amount + amount * 0.01;
 	});
@@ -105,17 +137,9 @@
 			</div>
 
 			<!-- Form Card -->
-			<div class="card p-8 animate-scale-in">
 				<form
-					method="POST"
-					use:enhance={() => {
-						handleSubmit();
-						return async ({ update }) => {
-							isSubmitting = false;
-							await update();
-						};
-					}}
-					class="space-y-6"
+					onsubmit={handleSubmit}
+					class="card p-8 animate-scale-in space-y-6"
 				>
 					<!-- Project Selector -->
 					<div>
@@ -309,12 +333,10 @@
 								Create Bounty
 							{/if}
 						</button>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
-		</div>
-	</div>
-{:else}
+		{:else}
 	<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-orange-50">
 		<div class="card p-12 text-center max-w-md animate-scale-in">
 			<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-100 flex items-center justify-center">

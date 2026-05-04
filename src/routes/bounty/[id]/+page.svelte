@@ -1,31 +1,30 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-
+	
 	let { data } = $props();
-
+	
 	let bounty = $derived(data.bounty);
 	let isOwner = $derived(data.isOwner);
 	let isAssignee = $derived(data.isAssignee);
 	let user = $derived(data.user);
-
+	
 	let showSubmitForm = $state(false);
 	let isSubmitting = $state(false);
-
+	
 	// Calculate platform fee (1%)
-	let platformFee = $derived.by(() => {
+	let platformFee = $derived(() => {
 		return Math.round(bounty.amount * 0.01);
 	});
-
-	let netAmount = $derived.by(() => {
+	
+	let netAmount = $derived(() => {
 		return bounty.amount - platformFee();
 	});
-
+	
 	function formatCurrency(amount: number): string {
 		return `$${(amount / 100).toFixed(2)}`;
 	}
-
+	
 	function getStatusColor(status: string): string {
 		const colors: Record<string, string> = {
 			open: 'bg-green-100 text-green-800',
@@ -36,7 +35,7 @@
 		};
 		return colors[status] || 'bg-gray-100 text-gray-800';
 	}
-
+	
 	function getPriorityColor(priority: string): string {
 		const colors: Record<string, string> = {
 			low: 'bg-gray-100 text-gray-600',
@@ -46,7 +45,7 @@
 		};
 		return colors[priority] || 'bg-gray-100 text-gray-600';
 	}
-
+	
 	function parseSkills(skillsStr: string | null): string[] {
 		if (!skillsStr) return [];
 		try {
@@ -55,23 +54,66 @@
 			return skillsStr.split(',').map((s: string) => s.trim());
 		}
 	}
-
-	function handleClaim() {
+	
+	function handleClaim(e: SubmitEvent) {
 		if (!user) {
 			goto('/login');
 			return;
 		}
+		
+		e.preventDefault();
+		const formData = new FormData();
+		
+		fetch('?/claim', {
+			method: 'POST',
+			body: formData
+		}).then(response => {
+			if (response.ok) {
+				window.location.reload();
+			}
+		}).catch(error => {
+			console.error('Error claiming bounty:', error);
+		});
 	}
 
-	function handleSubmit() {
+	function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
 		isSubmitting = true;
+		
+		const formData = new FormData(e.target as HTMLFormElement);
+		
+		fetch('?/submit', {
+			method: 'POST',
+			body: formData
+		}).then(response => {
+			isSubmitting = false;
+			if (response.ok) {
+				window.location.reload();
+			}
+		}).catch(error => {
+			console.error('Error submitting work:', error);
+			isSubmitting = false;
+		});
 	}
 
-	function handleApprove() {
+	function handleApprove(action: string) {
 		if (!user) {
 			goto('/login');
 			return;
 		}
+		
+		const formData = new FormData();
+		
+		fetch(`?/${action}`, {
+			method: 'POST',
+			body: formData
+		}).then(response => {
+			if (response.ok) {
+				window.location.reload();
+			}
+		}).catch(error => {
+			console.error(`Error with ${action}:`, error);
+		});
 	}
 </script>
 
@@ -84,7 +126,7 @@
 					← Back to Bounties
 				</a>
 			</div>
-
+			
 			<!-- Main Bounty Card -->
 			<div class="card p-8 mb-6 animate-scale-in">
 				<div class="flex flex-col md:flex-row justify-between items-start mb-6">
@@ -104,14 +146,14 @@
 						<p class="text-sm text-gray-500 mt-1">Reward Amount</p>
 					</div>
 				</div>
-
+				
 				{#if bounty.description}
 					<div class="mb-6">
 						<h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
 						<p class="text-gray-700 leading-relaxed">{bounty.description}</p>
 					</div>
 				{/if}
-
+				
 				{#if bounty.skills}
 					<div class="mb-6">
 						<h2 class="text-lg font-semibold text-gray-900 mb-2">Required Skills</h2>
@@ -124,7 +166,7 @@
 						</div>
 					</div>
 				{/if}
-
+				
 				{#if bounty.deadline}
 					<div class="mb-6 p-4 bg-amber-50 rounded-lg">
 						<p class="text-sm text-gray-600">
@@ -135,7 +177,7 @@
 						</p>
 					</div>
 				{/if}
-
+				
 				<!-- Platform Fee Info -->
 				<div class="border-t border-gray-100 pt-6 mb-6">
 					<h2 class="text-lg font-semibold text-gray-900 mb-3">Payment Breakdown</h2>
@@ -154,24 +196,23 @@
 						</div>
 					</div>
 				</div>
-
+				
 				<!-- Action Buttons -->
 				<div class="space-y-3">
 					{#if user && bounty.status === 'open'}
-						<form method="POST" action="?/claim" use:enhance>
+						<form onsubmit={handleClaim}>
 							<button
 								type="submit"
-								onclick={handleClaim}
 								class="w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center justify-center btn-lift"
 							>
 								<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 012 2" />
 								</svg>
 								Claim This Bounty
 							</button>
 						</form>
 					{/if}
-
+					
 					{#if isAssignee && bounty.status === 'in_progress'}
 						{#if !showSubmitForm}
 							<button
@@ -185,15 +226,7 @@
 							</button>
 						{:else}
 							<form
-								method="POST"
-								action="?/submit"
-								use:enhance={() => {
-									handleSubmit();
-									return async ({ update }) => {
-										isSubmitting = false;
-										await update();
-									};
-								}}
+								onsubmit={handleSubmit}
 								class="space-y-4"
 							>
 								<div>
@@ -231,24 +264,18 @@
 											<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
 											<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 										</svg>
-										Submitting...
-									{:else}
-										<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-										</svg>
-										Submit Work
 									{/if}
+									Submit Work
 								</button>
 							</form>
 						{/if}
 					{/if}
-
+					
 					{#if isOwner && bounty.status === 'submitted'}
 						<div class="flex gap-3">
-							<form method="POST" action="?/approve" use:enhance class="flex-1">
+							<form onsubmit={() => { handleApprove('approve'); return false; }} class="flex-1">
 								<button
 									type="submit"
-									onclick={handleApprove}
 									class="w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center justify-center btn-lift"
 								>
 									<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,7 +284,7 @@
 									Approve & Complete
 								</button>
 							</form>
-							<form method="POST" action="?/reject" use:enhance class="flex-1">
+							<form onsubmit={() => { handleApprove('reject'); return false; }} class="flex-1">
 								<button
 									type="submit"
 									class="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center btn-lift"
@@ -272,7 +299,7 @@
 					{/if}
 				</div>
 			</div>
-
+			
 			<!-- Project Info -->
 			{#if bounty.project}
 				<div class="card p-6 mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
@@ -288,7 +315,7 @@
 					</a>
 				</div>
 			{/if}
-
+			
 			<!-- Creator Info -->
 			{#if bounty.creator}
 				<div class="card p-6 mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
@@ -308,7 +335,7 @@
 					</a>
 				</div>
 			{/if}
-
+			
 			<!-- Assignee Info -->
 			{#if bounty.assignee}
 				<div class="card p-6 mb-6 animate-fade-in-up" style="animation-delay: 0.3s;">
@@ -328,7 +355,7 @@
 					</a>
 				</div>
 			{/if}
-
+			
 			<!-- Submission Info -->
 			{#if bounty.status === 'submitted' && bounty.submissionPR}
 				<div class="card p-6 animate-fade-in-up" style="animation-delay: 0.4s;">
@@ -342,76 +369,10 @@
 						</a>
 					</p>
 					{#if bounty.submissionNotes}
-						<p class="text-gray-600">{bounty.submissionNotes}</p>
+						<p class="text-gray-700">{bounty.submissionNotes}</p>
 					{/if}
 				</div>
 			{/if}
 		</div>
 	</div>
-{:else}
-	<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-orange-50">
-		<div class="card p-12 text-center max-w-md animate-scale-in">
-			<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-100 flex items-center justify-center">
-				<svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-				</svg>
-			</div>
-			<h2 class="text-2xl font-bold text-gray-900 mb-4">Bounty Not Found</h2>
-			<p class="text-gray-600 mb-8">The bounty you're looking for doesn't exist or has been removed.</p>
-			<a href="/dashboard/bounties" class="btn-primary-gradient btn-lift w-full justify-center">
-				Back to Bounties
-				<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-				</svg>
-			</a>
-		</div>
-	</div>
 {/if}
-
-<style>
-	:global(.input) {
-		@apply px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all duration-300;
-	}
-
-	:global(.btn-primary-gradient) {
-		@apply px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-orange-700 transition-all duration-300 flex items-center justify-center;
-	}
-
-	:global(.btn-lift) {
-		@apply transform hover:-translate-y-0.5 hover:shadow-lg;
-	}
-
-	:global(.card) {
-		@apply bg-white rounded-2xl shadow-md;
-	}
-
-	:global(.animate-fade-in-up) {
-		animation: fadeInUp 0.6s ease-out forwards;
-	}
-
-	:global(.animate-scale-in) {
-		animation: scaleIn 0.5s ease-out forwards;
-	}
-
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes scaleIn {
-		from {
-			opacity: 0;
-			transform: scale(0.95);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-</style>
