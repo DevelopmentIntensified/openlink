@@ -30,24 +30,35 @@
 		{ value: 'community', label: 'Community', desc: 'Open source community project' }
 	];
 	
-	async function handleSubmit() {
-		const response = await fetch('?/create', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				name,
-				description,
-				repoUrl,
-				website,
-				category,
-				type,
-				isBountyEnabled
-			})
-		});
+	async function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		isSubmitting = true;
 		
-		if (response.ok) {
-			const result = await response.json();
-			goto(`/project/${result.projectId}`);
+		try {
+			const response = await fetch('?/create', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					name,
+					description,
+					repoUrl,
+					website,
+					category,
+					type,
+					isBountyEnabled
+				})
+			});
+			
+			if (response.ok) {
+				const result = await response.json();
+				goto(`/project/${result.projectId}`);
+			} else {
+				console.error('Form submission failed:', await response.text());
+			}
+		} catch (error) {
+			console.error('Error submitting form:', error);
+		} finally {
+			isSubmitting = false;
 		}
 	}
 </script>
@@ -68,7 +79,6 @@
 
 			<!-- Form Card -->
 			<form
-				use:enhance
 				class="card p-8 space-y-6 animate-scale-in"
 				onsubmit={handleSubmit}
 			>
