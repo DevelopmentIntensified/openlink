@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { getBountiesByUser, getBountiesByProject, getAllBounties } from '$lib/server/lib/bounties';
-import { getProjectsByOwner } from '$lib/server/projects/project-logic';
+import { getProjectsByOwner } from '$lib/server/lib/projects';
 
 export const load: PageServerLoad = async (event) => {
 	const session = event.locals.session;

@@ -1,4 +1,4 @@
-import { betterAuth } from 'better-auth/minimal';
+import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
 import { getRequestEvent } from '$app/server';
@@ -40,11 +40,20 @@ export const authConfig = {
 		window: 60,
 		max: 100,
 		customRules: {
-			'/sign-in/email': { window: 15 * 60, max: 5 },
-			'/sign-up/email': { window: 60 * 60, max: 3 },
+			'/login': { window: 15 * 60, max: 5 },
+			'/signup': { window: 60 * 60, max: 3 },
 			'/verify-email': { window: 60, max: 3 },
 			'/callback/github': { window: 60, max: 10 },
 			'/callback/google': { window: 60, max: 10 }
+		}
+	},
+	session: {
+		expiresIn: 60 * 60 * 24 * 7, // 7 days
+		updateAge: 60 * 60 * 24, // 24 hours
+		cookieCache: {
+			enabled: true,
+			maxAge: 60 * 5, // 5 minutes
+			strategy: 'compact'
 		}
 	},
 	advanced: {

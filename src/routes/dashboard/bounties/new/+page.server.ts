@@ -67,8 +67,8 @@ export const actions: Actions = {
 		// Parse skills as array
 		const skillsArray = skills
 			.split(',')
-			.map((s) => s.trim())
-			.filter((s) => s.length > 0);
+			.map((s: string) => s.trim())
+			.filter((s: string) => s.length > 0);
 
 		// Parse deadline if provided
 		let deadlineDate: Date | undefined;
@@ -90,79 +90,5 @@ export const actions: Actions = {
 
 		// Redirect to the bounty detail page on success
 		throw redirect(302, `/bounty/${bountyId}`);
-	}
-};
-};
-
-export const actions: Actions = {
-	default: async (event) => {
-		const session = event.locals.session;
-
-		if (!session) {
-			throw redirect(302, '/login');
-		}
-
-		const formData = await event.request.formData();
-		const title = formData.get('title')?.toString() || '';
-		const description = formData.get('description')?.toString() || '';
-		const amount = formData.get('amount')?.toString() || '';
-		const skills = formData.get('skills')?.toString() || '';
-		const priority = (formData.get('priority')?.toString() || 'medium') as
-			| 'low'
-			| 'medium'
-			| 'high'
-			| 'urgent';
-		const deadline = formData.get('deadline')?.toString() || '';
-		const projectId = formData.get('projectId')?.toString() || '';
-
-		// Validation
-		const errors: Record<string, string> = {};
-
-		if (!title.trim()) {
-			errors.title = 'Title is required';
-		}
-
-		const amountNum = parseFloat(amount);
-		if (!amount || isNaN(amountNum) || amountNum <= 0) {
-			errors.amount = 'Valid amount is required';
-		}
-
-		if (!projectId) {
-			errors.projectId = 'Project is required';
-		}
-
-		if (Object.keys(errors).length > 0) {
-			return { errors, title, description, amount, skills, priority, deadline, projectId };
-		}
-
-		// Convert dollars to cents for storage
-		const amountInCents = Math.round(amountNum * 100);
-
-		// Parse skills as array
-		const skillsArray = skills
-			.split(',')
-			.map((s) => s.trim())
-			.filter((s) => s.length > 0);
-
-		// Parse deadline if provided
-		let deadlineDate: Date | undefined;
-		if (deadline) {
-			deadlineDate = new Date(deadline + 'T23:59:59');
-		}
-
-		// Create the bounty
-		const bountyId = await createBountyInDb({
-			projectId,
-			title,
-			description: description || undefined,
-			skills: skillsArray.length > 0 ? JSON.stringify(skillsArray) : undefined,
-			amount: amountInCents,
-			priority,
-			deadline: deadlineDate,
-			createdBy: session.userId
-		});
-
-		// Redirect to the bounties list on success
-		throw redirect(302, '/dashboard/bounties');
 	}
 };

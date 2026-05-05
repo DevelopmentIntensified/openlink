@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { projects, bounties, users } from '$lib/server/db/schema';
+import { projects, bounties, user } from '$lib/server/db/schema';
 import { eq, desc } from 'drizzle-orm';
 
 export async function createProject(data: {

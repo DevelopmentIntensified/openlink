@@ -44,7 +44,7 @@
 				</div>
 			</div>
 
-			<form class="space-y-5" method="POST" action="/api/auth/signin/email">
+			<form class="space-y-5" method="POST" action="/api/auth/login">
 				<div>
 					<label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">
 						Email address

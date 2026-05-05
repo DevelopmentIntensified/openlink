@@ -333,9 +333,10 @@
 								Create Bounty
 							{/if}
 						</button>
-					</form>
 				</div>
+					</form>
 			</div>
+	</div>
 		{:else}
 	<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-orange-50">
 		<div class="card p-12 text-center max-w-md animate-scale-in">

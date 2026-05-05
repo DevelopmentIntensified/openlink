@@ -141,6 +141,7 @@
 				{/if}
 			</div>
 		</div>
+	</div>
 	</nav>
 
 <main class="min-h-screen">
