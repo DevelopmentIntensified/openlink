@@ -95,13 +95,8 @@ export function validateProjectForm(formData: FormData): {
 	// isBountyEnabled (checkbox)
 	data.isBountyEnabled = formData.get('isBountyEnabled') === 'true';
 
-	// ownerId (required, should be set by server)
-	const ownerId = formData.get('ownerId')?.toString();
-	if (!ownerId) {
-		errors.general = 'Owner ID is required';
-	} else {
-		data.ownerId = ownerId;
-	}
+	// ownerId should be set by server from session, not from form data
+	// Removed validation here - set in +page.server.ts
 
 	return { data, errors };
 }

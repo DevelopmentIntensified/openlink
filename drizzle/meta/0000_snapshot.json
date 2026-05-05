@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "dc7a2b68-dd63-45d4-9212-ba87d08b3012",
+  "id": "b12b823a-f911-4e78-8f34-716eeba9fcd8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "bounties": {
@@ -35,11 +35,33 @@
           "notNull": false,
           "autoincrement": false
         },
+        "skills": {
+          "name": "skills",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "amount": {
           "name": "amount",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "priority": {
+          "name": "priority",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'medium'"
+        },
+        "deadline": {
+          "name": "deadline",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "status": {
@@ -64,16 +86,37 @@
           "notNull": false,
           "autoincrement": false
         },
-        "salableCheckoutId": {
-          "name": "salableCheckoutId",
+        "submissionPR": {
+          "name": "submissionPR",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "salablePaymentId": {
-          "name": "salablePaymentId",
+        "submissionNotes": {
+          "name": "submissionNotes",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "submissionDate": {
+          "name": "submissionDate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "completedAt": {
+          "name": "completedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "paidAt": {
+          "name": "paidAt",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -101,10 +144,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "bounties_createdBy_users_id_fk": {
-          "name": "bounties_createdBy_users_id_fk",
+        "bounties_createdBy_user_id_fk": {
+          "name": "bounties_createdBy_user_id_fk",
           "tableFrom": "bounties",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "createdBy"
           ],
@@ -114,10 +157,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "bounties_assignedTo_users_id_fk": {
-          "name": "bounties_assignedTo_users_id_fk",
+        "bounties_assignedTo_user_id_fk": {
+          "name": "bounties_assignedTo_user_id_fk",
           "tableFrom": "bounties",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "assignedTo"
           ],
@@ -163,8 +206,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "salablePaymentId": {
-          "name": "salablePaymentId",
+        "stripePaymentId": {
+          "name": "stripePaymentId",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -193,12 +236,156 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "bounty_contributions_userId_users_id_fk": {
-          "name": "bounty_contributions_userId_users_id_fk",
+        "bounty_contributions_userId_user_id_fk": {
+          "name": "bounty_contributions_userId_user_id_fk",
           "tableFrom": "bounty_contributions",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "devteam_members": {
+      "name": "devteam_members",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "devteamId": {
+          "name": "devteamId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "joinedAt": {
+          "name": "joinedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "devteam_members_devteamId_devteams_id_fk": {
+          "name": "devteam_members_devteamId_devteams_id_fk",
+          "tableFrom": "devteam_members",
+          "tableTo": "devteams",
+          "columnsFrom": [
+            "devteamId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "devteam_members_userId_user_id_fk": {
+          "name": "devteam_members_userId_user_id_fk",
+          "tableFrom": "devteam_members",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "devteams": {
+      "name": "devteams",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ownerId": {
+          "name": "ownerId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "devteams_projectId_projects_id_fk": {
+          "name": "devteams_projectId_projects_id_fk",
+          "tableFrom": "devteams",
+          "tableTo": "projects",
+          "columnsFrom": [
+            "projectId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "devteams_ownerId_user_id_fk": {
+          "name": "devteams_ownerId_user_id_fk",
+          "tableFrom": "devteams",
+          "tableTo": "user",
+          "columnsFrom": [
+            "ownerId"
           ],
           "columnsTo": [
             "id"
@@ -249,6 +436,14 @@
           "notNull": false,
           "autoincrement": false
         },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'other'"
+        },
         "ownerId": {
           "name": "ownerId",
           "type": "text",
@@ -282,10 +477,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "projects_ownerId_users_id_fk": {
-          "name": "projects_ownerId_users_id_fk",
+        "projects_ownerId_user_id_fk": {
+          "name": "projects_ownerId_user_id_fk",
           "tableFrom": "projects",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "ownerId"
           ],
@@ -296,118 +491,6 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "sessions": {
-      "name": "sessions",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "expiresAt": {
-          "name": "expiresAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "sessions_userId_users_id_fk": {
-          "name": "sessions_userId_users_id_fk",
-          "tableFrom": "sessions",
-          "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "users": {
-      "name": "users",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "username": {
-          "name": "username",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "avatarUrl": {
-          "name": "avatarUrl",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "provider": {
-          "name": "provider",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "providerId": {
-          "name": "providerId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "users_username_unique": {
-          "name": "users_username_unique",
-          "columns": [
-            "username"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}

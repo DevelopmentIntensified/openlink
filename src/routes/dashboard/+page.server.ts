@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
-import { projects, bounties } from '$lib/server/db/schema';
+import { projects, bounties, user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load = async (event) => {
@@ -10,26 +10,45 @@ export const load = async (event) => {
 	});
 
 	if (!session?.user) {
-		return {
-			user: null,
-			userProjects: [],
-			userBounties: []
-		};
+		// Redirect to login if not authenticated
+		throw redirect(303, '/login');
 	}
 
-	const userProjects = await db
-		.select()
-		.from(projects)
-		.where(eq(projects.ownerId, session.user.id));
+	try {
+		const userProjects = await db
+			.select()
+			.from(projects)
+			.where(eq(projects.ownerId, session.user.id));
 
-	const userBounties = await db
-		.select()
-		.from(bounties)
-		.where(eq(bounties.createdBy, session.user.id));
+		// Simplified bounties query - select specific columns that exist
+		const userBounties = await db
+			.select({
+				id: bounties.id,
+				projectId: bounties.projectId,
+				title: bounties.title,
+				description: bounties.description,
+				amount: bounties.amount,
+				priority: bounties.priority,
+				deadline: bounties.deadline,
+				status: bounties.status,
+				createdBy: bounties.createdBy,
+				assignedTo: bounties.assignedTo
+			})
+			.from(bounties)
+			.where(eq(bounties.createdBy, session.user.id));
 
-	return {
-		user: session.user,
-		userProjects,
-		userBounties
-	};
+		return {
+			user: session.user,
+			userProjects,
+			userBounties
+		};
+	} catch (error) {
+		console.error('Dashboard load error:', error);
+		return {
+			user: session.user,
+			userProjects: [],
+			userBounties: [],
+			error: 'Failed to load dashboard data'
+		};
+	}
 };
