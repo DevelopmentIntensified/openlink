@@ -79,13 +79,13 @@ export async function getProjectWithBounties(projectId: string) {
 	const projectBounties = await db.select().from(bounties).where(eq(bounties.projectId, projectId));
 	const ownerResult = await db
 		.select({
-			id: users.id,
-			username: users.username,
-			avatarUrl: users.avatarUrl,
-			bio: users.bio
+			id: user.id,
+			name: user.name,
+			image: user.image,
+			bio: user.bio
 		})
-		.from(users)
-		.where(eq(users.id, project.ownerId));
+		.from(user)
+		.where(eq(user.id, project.ownerId));
 
 	return {
 		...project,

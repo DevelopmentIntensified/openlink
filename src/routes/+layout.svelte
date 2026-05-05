@@ -136,8 +136,8 @@
 						</div>
 					{/if}
 				{:else}
-					<a href="/dev/signup" class="btn-ghost text-sm">Dev</a>
-					<a href="/sponsor/signup" class="btn-primary-gradient text-sm btn-lift">Sponsor</a>
+					<a href="/dev/signup" class="btn-dev text-sm">Dev</a>
+					<a href="/sponsor/signup" class="btn-sponsor text-sm">Sponsor</a>
 				{/if}
 			</div>
 		</div>

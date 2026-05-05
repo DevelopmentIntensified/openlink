@@ -103,18 +103,18 @@ export async function getBountyWithProject(bountyId: string) {
 	const bounty = bountyResult[0];
 	const project = await db.select().from(projects).where(eq(projects.id, bounty.projectId));
 	const creator = await db.select({
-		id: users.id,
-		username: users.username,
-		avatarUrl: users.avatarUrl
-	}).from(users).where(eq(users.id, bounty.createdBy));
+		id: user.id,
+		name: user.name,
+		image: user.image
+	}).from(user).where(eq(user.id, bounty.createdBy));
 	
 	let assignee = null;
 	if (bounty.assignedTo) {
 		const assigneeResult = await db.select({
-			id: users.id,
-			username: users.username,
-			avatarUrl: users.avatarUrl
-		}).from(users).where(eq(users.id, bounty.assignedTo));
+			id: user.id,
+			name: user.name,
+			image: user.image
+		}).from(user).where(eq(user.id, bounty.assignedTo));
 		assignee = assigneeResult[0] || null;
 	}
 	

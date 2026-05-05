@@ -3,16 +3,22 @@ CREATE TABLE `bounties` (
 	`projectId` text NOT NULL,
 	`title` text NOT NULL,
 	`description` text,
+	`skills` text,
 	`amount` integer NOT NULL,
+	`priority` text DEFAULT 'medium',
+	`deadline` integer,
 	`status` text DEFAULT 'open' NOT NULL,
 	`createdBy` text NOT NULL,
 	`assignedTo` text,
-	`salableCheckoutId` text,
-	`salablePaymentId` text,
+	`submissionPR` text,
+	`submissionNotes` text,
+	`submissionDate` integer,
+	`completedAt` integer,
+	`paidAt` integer,
 	`createdAt` integer NOT NULL,
 	FOREIGN KEY (`projectId`) REFERENCES `projects`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`createdBy`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`assignedTo`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`createdBy`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`assignedTo`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `bounty_contributions` (
@@ -20,10 +26,30 @@ CREATE TABLE `bounty_contributions` (
 	`bountyId` text NOT NULL,
 	`userId` text NOT NULL,
 	`amount` integer NOT NULL,
-	`salablePaymentId` text,
+	`stripePaymentId` text,
 	`createdAt` integer NOT NULL,
 	FOREIGN KEY (`bountyId`) REFERENCES `bounties`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `devteam_members` (
+	`id` text PRIMARY KEY NOT NULL,
+	`devteamId` text NOT NULL,
+	`userId` text NOT NULL,
+	`joinedAt` integer NOT NULL,
+	FOREIGN KEY (`devteamId`) REFERENCES `devteams`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `devteams` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`description` text,
+	`projectId` text,
+	`ownerId` text NOT NULL,
+	`createdAt` integer NOT NULL,
+	FOREIGN KEY (`projectId`) REFERENCES `projects`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`ownerId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `projects` (
@@ -32,31 +58,14 @@ CREATE TABLE `projects` (
 	`description` text,
 	`repoUrl` text,
 	`website` text,
+	`category` text DEFAULT 'other',
 	`ownerId` text NOT NULL,
 	`type` text DEFAULT 'individual' NOT NULL,
 	`isBountyEnabled` integer DEFAULT false NOT NULL,
 	`createdAt` integer NOT NULL,
-	FOREIGN KEY (`ownerId`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`ownerId`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
-CREATE TABLE `sessions` (
-	`id` text PRIMARY KEY NOT NULL,
-	`userId` text NOT NULL,
-	`expiresAt` integer NOT NULL,
-	FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
-);
---> statement-breakpoint
-CREATE TABLE `users` (
-	`id` text PRIMARY KEY NOT NULL,
-	`username` text NOT NULL,
-	`email` text,
-	`avatarUrl` text,
-	`provider` text NOT NULL,
-	`providerId` text NOT NULL,
-	`createdAt` integer NOT NULL
-);
---> statement-breakpoint
-CREATE UNIQUE INDEX `users_username_unique` ON `users` (`username`);--> statement-breakpoint
 CREATE TABLE `account` (
 	`id` text PRIMARY KEY NOT NULL,
 	`account_id` text NOT NULL,

@@ -1,13 +1,17 @@
 /**
- * Working Auth Test Helper
+ * Test Session API Endpoint - Fixed Version
  * 
- * Creates a test session by directly using Better Auth's API
- * and returns the session cookie for Playwright.
+ * Uses Better Auth API directly to create sessions for e2e tests.
+ * ONLY available in development/test mode.
+ * Requires API key for security.
  */
 
 import { auth } from '$lib/server/auth';
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import { db } from '$lib/server/db';
+import { user, session } from '$lib/server/db/schema';
+import { eq } from 'drizzle-orm';
 
 export async function POST({ request }) {
 	// Only allow in development/test
@@ -24,33 +28,54 @@ export async function POST({ request }) {
 			return json({ error: 'Invalid API key' }, { status: 401 });
 		}
 
+		if (!email || !password) {
+			return json({ error: 'Email and password required' }, { status: 400 });
+		}
+
 		// 1. Sign up user (ignore if exists)
 		try {
 			await auth.api.signUpEmail({
 				body: { email, password, name: name || 'Test User', roles: ['dev'] }
 			});
 		} catch (e) {
-			// Ignore - user might exist
+			// Ignore signup errors (user might exist)
 		}
 
-		// 2. Sign in
-		const result = await auth.api.signInEmail({
-			body: { email, password }
-		});
+		// 2. Sign in using Better Auth API
+		try {
+			const result = await auth.api.signInEmail({
+				body: { email, password }
+			});
 
-		if (!result?.session?.token) {
-			return json({ error: 'Sign in failed', hasSession: !!result?.session }, { status: 401 });
+			console.log('SignIn result:', JSON.stringify({
+				hasResult: !!result,
+				hasSession: !!result?.session,
+				hasToken: !!result?.session?.token,
+				hasUser: !!result?.user
+			}));
+
+			if (!result?.session?.token) {
+				return json({ 
+					error: 'Invalid credentials', 
+					debug: { 
+						hasResult: !!result,
+						hasSession: !!result?.session,
+						sessionKeys: result?.session ? Object.keys(result.session) : null
+					}
+				}, { status: 401 });
+			}
+
+			// Return session token and user info
+			return json({
+				success: true,
+				sessionToken: result.session.token,
+				user: result.user
+			});
+		} catch (signInError: any) {
+			return json({ error: 'Sign in failed', details: signInError?.message }, { status: 401 });
 		}
-
-		// 3. Return session token
-		return json({
-			success: true,
-			sessionToken: result.session.token,
-			user: result.user
-		});
-
 	} catch (error: any) {
-		console.error('Test session error:', error);
-		return json({ error: error?.message || 'Internal error' }, { status: 500 });
+		console.error('Test session creation error:', error);
+		return json({ error: 'Internal error', details: error?.message }, { status: 500 });
 	}
 }
