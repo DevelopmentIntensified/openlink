@@ -15,7 +15,6 @@ export const GET: RequestHandler = async (event) => {
 	
 	try {
 		await db.update(bounties).set({
-			salableCheckoutId: checkoutId,
 			status: 'paid'
 		}).where(eq(bounties.id, bountyId));
 		

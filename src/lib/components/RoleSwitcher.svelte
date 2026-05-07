@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { getRoles } from '$lib/server/rbac';
+	import { goto } from '$app/navigation';
 	import {
 		canSwitchRole,
 		getCurrentRole,
 		getSwitchTarget,
-		handleRoleSwitch,
+		getSwitchPath,
 		getAvailableRoles
 	} from '$lib/server/rbac/role-switcher';
 	import { page } from '$app/stores';
@@ -18,7 +19,8 @@
 
 	function onSwitch() {
 		if (targetRole) {
-			handleRoleSwitch($page.url.pathname, targetRole);
+			const newPath = getSwitchPath($page.url.pathname, targetRole);
+			goto(newPath);
 		}
 	}
 </script>

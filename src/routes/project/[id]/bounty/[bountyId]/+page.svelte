@@ -81,8 +81,8 @@
 		<div class="bg-white rounded-lg shadow-md p-6 mb-6">
 			<h2 class="text-lg font-semibold mb-2">Created by</h2>
 			<a href="/profile/{bounty.creator.username}" class="flex items-center gap-2">
-				{#if bounty.creator.avatarUrl}
-					<img src={bounty.creator.avatarUrl} alt={bounty.creator.username} class="w-8 h-8 rounded-full" />
+				{#if bounty.creator.image}
+					<img src={bounty.creator.image} alt={bounty.creator.username} class="w-8 h-8 rounded-full" />
 				{:else}
 					<div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
 						{bounty.creator.username.charAt(0).toUpperCase()}
@@ -97,8 +97,8 @@
 		<div class="bg-white rounded-lg shadow-md p-6 mb-6">
 			<h2 class="text-lg font-semibold mb-2">Assigned to</h2>
 			<a href="/profile/{bounty.assignee.username}" class="flex items-center gap-2">
-				{#if bounty.assignee.avatarUrl}
-					<img src={bounty.assignee.avatarUrl} alt={bounty.assignee.username} class="w-8 h-8 rounded-full" />
+				{#if bounty.assignee.image}
+					<img src={bounty.assignee.image} alt={bounty.assignee.username} class="w-8 h-8 rounded-full" />
 				{:else}
 					<div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
 						{bounty.assignee.username.charAt(0).toUpperCase()}

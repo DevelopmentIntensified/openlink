@@ -82,7 +82,8 @@ export async function getProjectWithBounties(projectId: string) {
 			id: user.id,
 			name: user.name,
 			image: user.image,
-			bio: user.bio
+			bio: user.bio,
+			username: user.username
 		})
 		.from(user)
 		.where(eq(user.id, project.ownerId));

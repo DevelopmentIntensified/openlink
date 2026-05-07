@@ -69,8 +69,8 @@
 
 				{#if project.owner}
 					<a href="/profile/{project.owner.username}" class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-amber-50 transition-all duration-200 group">
-						{#if project.owner.avatarUrl}
-							<img src={project.owner.avatarUrl} alt={project.owner.username} class="w-12 h-12 rounded-full ring-2 ring-amber-200 group-hover:ring-amber-400 transition-all" />
+						{#if project.owner.image}
+							<img src={project.owner.image} alt={project.owner.username} class="w-12 h-12 rounded-full ring-2 ring-amber-200 group-hover:ring-amber-400 transition-all" />
 						{:else}
 							<div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white text-lg font-semibold">
 								{project.owner.name?.charAt(0)?.toUpperCase() ?? 'U'}

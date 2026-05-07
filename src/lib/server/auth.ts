@@ -13,7 +13,7 @@ export const authConfig = {
 	trustedOrigins: isProduction
 		? [env.ORIGIN!, 'https://bountyforge.dev']
 		: [env.ORIGIN!, 'http://localhost:5173', 'http://localhost:4173'],
-	database: drizzleAdapter(db, { provider: 'sqlite' }),
+	database: drizzleAdapter(db, { provider: 'pg' }),
 	emailAndPassword: {
 		enabled: true,
 		minPasswordLength: 8,

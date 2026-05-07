@@ -18,7 +18,7 @@ describe('Route Guard - RBAC Enforcement', () => {
 			const result = checkRouteAccess('/dev/dashboard', ['sponsor']);
 
 			expect(result.allowed).toBe(false);
-			expect(result.redirect).toBe('/auth/signup?role=dev');
+			expect(result.redirect).toBe('/dev/signup');
 		});
 
 		it('should allow access to /sponsor/* when user has sponsor role', () => {
@@ -31,7 +31,7 @@ describe('Route Guard - RBAC Enforcement', () => {
 			const result = checkRouteAccess('/sponsor/dashboard', ['dev']);
 
 			expect(result.allowed).toBe(false);
-			expect(result.redirect).toBe('/auth/signup?role=sponsor');
+			expect(result.redirect).toBe('/sponsor/signup');
 		});
 
 		it('should allow access to /admin/* when user has admin role', () => {
@@ -77,7 +77,7 @@ describe('Route Guard - RBAC Enforcement', () => {
 			const result = checkRouteAccess('/dev/dashboard', []);
 
 			expect(result.allowed).toBe(false);
-			expect(result.redirect).toBe('/auth/signup?role=dev');
+			expect(result.redirect).toBe('/dev/signup');
 		});
 	});
 });

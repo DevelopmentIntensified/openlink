@@ -17,16 +17,16 @@ export const load: PageServerLoad = async (event) => {
 		throw error(404, 'User not found');
 	}
 	
-	const user = userResult[0];
+	const profileUser = userResult[0];
 	
-	const userProjects = await db.select().from(projects).where(eq(projects.ownerId, user.id));
+	const userProjects = await db.select().from(projects).where(eq(projects.ownerId, profileUser.id));
 	
-	const createdBounties = await db.select().from(bounties).where(eq(bounties.createdBy, user.id));
+	const createdBounties = await db.select().from(bounties).where(eq(bounties.createdBy, profileUser.id));
 	
-	const completedBounties = await db.select().from(bounties).where(eq(bounties.assignedTo, user.id));
+	const completedBounties = await db.select().from(bounties).where(eq(bounties.assignedTo, profileUser.id));
 	
 	return {
-		user,
+		user: profileUser,
 		projects: userProjects,
 		createdBounties,
 		completedBounties

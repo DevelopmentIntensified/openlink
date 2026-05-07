@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { pgTable, text, integer, timestamp, boolean } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { user, session } from './auth.schema';
 
@@ -10,7 +10,7 @@ export const projectCategoryEnum = ['web', 'mobile', 'desktop', 'backend', 'devo
 export const bountyStatusEnum = ['open', 'in_progress', 'submitted', 'completed', 'paid'] as const;
 export const bountyPriorityEnum = ['low', 'medium', 'high', 'urgent'] as const;
 
-export const projects = sqliteTable("projects", {
+export const projects = pgTable("projects", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	description: text("description"),
@@ -19,54 +19,54 @@ export const projects = sqliteTable("projects", {
 	category: text("category", { enum: projectCategoryEnum }).default('other'),
 	ownerId: text("ownerId").notNull().references(() => user.id),
 	type: text("type", { enum: projectTypeEnum }).notNull().default('individual'),
-	isBountyEnabled: integer("isBountyEnabled", { mode: "boolean" }).notNull().default(false),
-	createdAt: integer("createdAt", { mode: "timestamp" }).notNull()
+	isBountyEnabled: boolean("isBountyEnabled").notNull().default(false),
+	createdAt: timestamp("createdAt").notNull()
 });
 
-export const bounties = sqliteTable("bounties", {
+export const bounties = pgTable("bounties", {
 	id: text("id").primaryKey(),
 	projectId: text("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
 	title: text("title").notNull(),
 	description: text("description"),
-	skills: text("skills"), // JSON array of required skills
-	amount: integer("amount").notNull(), // in cents
+	skills: text("skills"),
+	amount: integer("amount").notNull(),
 	priority: text("priority", { enum: bountyPriorityEnum }).default('medium'),
-	deadline: integer("deadline", { mode: "timestamp" }), // optional deadline
+	deadline: timestamp("deadline"),
 	status: text("status", { enum: bountyStatusEnum }).notNull().default('open'),
 	createdBy: text("createdBy").notNull().references(() => user.id),
 	assignedTo: text("assignedTo").references(() => user.id),
-	submissionPR: text("submissionPR"), // PR link from developer
+	submissionPR: text("submissionPR"),
 	submissionNotes: text("submissionNotes"),
-	submissionDate: integer("submissionDate", { mode: "timestamp" }),
-	completedAt: integer("completedAt", { mode: "timestamp" }),
-	paidAt: integer("paidAt", { mode: "timestamp" }),
-	createdAt: integer("createdAt", { mode: "timestamp" }).notNull()
+	submissionDate: timestamp("submissionDate"),
+	completedAt: timestamp("completedAt"),
+	paidAt: timestamp("paidAt"),
+	createdAt: timestamp("createdAt").notNull()
 });
 
-export const bountyContributions = sqliteTable("bounty_contributions", {
+export const bountyContributions = pgTable("bounty_contributions", {
 	id: text("id").primaryKey(),
 	bountyId: text("bountyId").notNull().references(() => bounties.id, { onDelete: "cascade" }),
 	userId: text("userId").notNull().references(() => user.id),
-	amount: integer("amount").notNull(), // in cents
+	amount: integer("amount").notNull(),
 	stripePaymentId: text("stripePaymentId"),
-	createdAt: integer("createdAt", { mode: "timestamp" }).notNull()
+	createdAt: timestamp("createdAt").notNull()
 });
 
 // DevTeams for project collaboration
-export const devteams = sqliteTable("devteams", {
+export const devteams = pgTable("devteams", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	description: text("description"),
 	projectId: text("projectId").references(() => projects.id, { onDelete: "cascade" }),
 	ownerId: text("ownerId").notNull().references(() => user.id),
-	createdAt: integer("createdAt", { mode: "timestamp" }).notNull()
+	createdAt: timestamp("createdAt").notNull()
 });
 
-export const devteamMembers = sqliteTable("devteam_members", {
+export const devteamMembers = pgTable("devteam_members", {
 	id: text("id").primaryKey(),
 	devteamId: text("devteamId").notNull().references(() => devteams.id, { onDelete: "cascade" }),
 	userId: text("userId").notNull().references(() => user.id),
-	joinedAt: integer("joinedAt", { mode: "timestamp" }).notNull()
+	joinedAt: timestamp("joinedAt").notNull()
 });
 
 // Relations - use 'user' (Better Auth's table, defined in auth.schema.ts)

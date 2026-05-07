@@ -1,350 +1,295 @@
-import { createClient } from '@libsql/client';
 import 'dotenv/config';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import * as schema from '../src/lib/server/db/schema';
 
-const client = createClient({
-	url: process.env.DATABASE_URL || 'file:openlink.db',
-	authToken: process.env.DATABASE_AUTH_TOKEN || undefined
-});
+const DATABASE_URL = process.env.DATABASE_URL;
+if (!DATABASE_URL) throw new Error('DATABASE_URL is not set');
+
+const sql = neon(DATABASE_URL);
+const db = drizzle(sql, { schema });
 
 async function seed() {
-	console.log('Seeding test database...');
+	console.log('Seeding Neon PostgreSQL database...');
 
-	const now = Date.now();
+	const now = new Date();
 
-	await client.execute(`DELETE FROM bounty_contributions`);
-	await client.execute(`DELETE FROM bounties`);
-	await client.execute(`DELETE FROM projects`);
-	await client.execute(`DELETE FROM sessions`);
-	await client.execute(`DELETE FROM users`);
-	await client.execute(`DELETE FROM account`);
-	await client.execute(`DELETE FROM session`);
-	await client.execute(`DELETE FROM verification`);
-	await client.execute(`DELETE FROM user`);
+	// Clean existing data in reverse dependency order
+	await db.delete(schema.bountyContributions);
+	await db.delete(schema.bounties);
+	await db.delete(schema.devteamMembers);
+	await db.delete(schema.devteams);
+	await db.delete(schema.projects);
+	await db.delete(schema.verification);
+	await db.delete(schema.account);
+	await db.delete(schema.session);
+	await db.delete(schema.user);
 
 	console.log('Cleared existing data');
 
-	await client.execute({
-		sql: `INSERT INTO users (id, username, email, avatarUrl, bio, skills, provider, providerId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'user_alice',
-			'alice_dev',
-			'alice@example.com',
-			'https://api.dicebear.com/7.x/avataaars/svg?seed=alice',
-			'Full-stack developer passionate about open source and AI',
-			'["React", "TypeScript", "Python", "Machine Learning"]',
-			'github',
-			'gh_alice',
-			now
-		]
-	});
+	// Create seed users (minimal fields for Better Auth user table)
+	const users = [
+		{
+			id: 'user_alice',
+			name: 'Alice Dev',
+			email: 'alice@example.com',
+			emailVerified: true,
+			image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alice',
+			roles: ['dev'],
+			bio: 'Full-stack developer passionate about open source and AI',
+			skills: ['React', 'TypeScript', 'Python', 'Machine Learning'],
+			githubUrl: 'https://github.com/alice',
+			username: 'alice_dev',
+			createdAt: now,
+			updatedAt: now
+		},
+		{
+			id: 'user_bob',
+			name: 'Bob Builder',
+			email: 'bob@example.com',
+			emailVerified: true,
+			image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=bob',
+			roles: ['dev'],
+			bio: 'Backend engineer specializing in distributed systems',
+			skills: ['Go', 'Rust', 'Kubernetes', 'PostgreSQL'],
+			githubUrl: 'https://github.com/bob',
+			username: 'bob_builder',
+			createdAt: now,
+			updatedAt: now
+		},
+		{
+			id: 'user_carol',
+			name: 'Carol Crypto',
+			email: 'carol@example.com',
+			emailVerified: true,
+			image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=carol',
+			roles: ['dev'],
+			bio: 'Blockchain developer and DeFi enthusiast',
+			skills: ['Solidity', 'Rust', 'Web3', 'TypeScript'],
+			githubUrl: 'https://github.com/carol',
+			username: 'carol_crypto',
+			createdAt: now,
+			updatedAt: now
+		},
+		{
+			id: 'user_dave',
+			name: 'Dave DevOps',
+			email: 'dave@example.com',
+			emailVerified: true,
+			image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=dave',
+			roles: ['dev'],
+			bio: 'DevOps engineer and cloud architect',
+			skills: ['AWS', 'Terraform', 'Docker', 'Python'],
+			githubUrl: 'https://github.com/dave',
+			username: 'dave_devops',
+			createdAt: now,
+			updatedAt: now
+		}
+	];
 
-	await client.execute({
-		sql: `INSERT INTO users (id, username, email, avatarUrl, bio, skills, provider, providerId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'user_bob',
-			'bob_builder',
-			'bob@example.com',
-			'https://api.dicebear.com/7.x/avataaars/svg?seed=bob',
-			'Backend engineer specializing in distributed systems',
-			'["Go", "Rust", "Kubernetes", "PostgreSQL"]',
-			'github',
-			'gh_bob',
-			now
-		]
-	});
+	for (const u of users) {
+		await db.insert(schema.user).values(u);
+	}
+	console.log(`Created ${users.length} users`);
 
-	await client.execute({
-		sql: `INSERT INTO users (id, username, email, avatarUrl, bio, skills, provider, providerId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'user_carol',
-			'carol_crypto',
-			'carol@example.com',
-			'https://api.dicebear.com/7.x/avataaars/svg?seed=carol',
-			'Blockchain developer and DeFi enthusiast',
-			'["Solidity", "Rust", "Web3", "TypeScript"]',
-			'github',
-			'gh_carol',
-			now
-		]
-	});
+	// Create projects
+	const projectData = [
+		{
+			id: 'proj_awesome',
+			name: 'Awesome App',
+			description: 'A modern web application for managing tasks and projects',
+			repoUrl: 'https://github.com/example/awesome-app',
+			website: 'https://awesome-app.example.com',
+			category: 'web' as const,
+			ownerId: 'user_alice',
+			type: 'individual' as const,
+			isBountyEnabled: true
+		},
+		{
+			id: 'proj_ml_lib',
+			name: 'ML Library',
+			description: 'A lightweight machine learning library for Python',
+			repoUrl: 'https://github.com/example/ml-library',
+			website: 'https://ml-lib.example.com',
+			category: 'other' as const,
+			ownerId: 'user_bob',
+			type: 'individual' as const,
+			isBountyEnabled: true
+		},
+		{
+			id: 'proj_defi_swap',
+			name: 'DeFi Swap',
+			description: 'Decentralized exchange protocol with low fees',
+			repoUrl: 'https://github.com/example/defi-swap',
+			website: 'https://defi-swap.example.com',
+			category: 'other' as const,
+			ownerId: 'user_carol',
+			type: 'individual' as const,
+			isBountyEnabled: true
+		},
+		{
+			id: 'proj_cloud_cli',
+			name: 'Cloud CLI',
+			description: 'Command-line tool for managing cloud infrastructure',
+			repoUrl: 'https://github.com/example/cloud-cli',
+			website: '',
+			category: 'other' as const,
+			ownerId: 'user_dave',
+			type: 'individual' as const,
+			isBountyEnabled: true
+		},
+		{
+			id: 'proj_mobile_app',
+			name: 'Mobile Wallet',
+			description: 'Cross-platform mobile wallet for cryptocurrencies',
+			repoUrl: 'https://github.com/example/mobile-wallet',
+			website: 'https://mobile-wallet.example.com',
+			category: 'other' as const,
+			ownerId: 'user_carol',
+			type: 'individual' as const,
+			isBountyEnabled: true
+		}
+	];
 
-	await client.execute({
-		sql: `INSERT INTO users (id, username, email, avatarUrl, bio, skills, provider, providerId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'user_dave',
-			'dave_devops',
-			'dave@example.com',
-			'https://api.dicebear.com/7.x/avataaars/svg?seed=dave',
-			'DevOps engineer and cloud architect',
-			'["AWS", "Terraform", "Docker", "Python"]',
-			'github',
-			'gh_dave',
-			now
-		]
-	});
+	for (const p of projectData) {
+		await db.insert(schema.projects).values({ ...p, createdAt: now });
+	}
+	console.log(`Created ${projectData.length} projects`);
 
-	console.log('Created users');
+	// Create bounties
+	const bountyData = [
+		{
+			id: 'bounty_1',
+			projectId: 'proj_awesome',
+			title: 'Add real-time collaboration',
+			description: 'Implement real-time collaboration using WebSockets',
+			skills: '["React","WebSocket","Node.js"]',
+			amount: 500,
+			priority: 'high' as const,
+			deadline: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_alice'
+		},
+		{
+			id: 'bounty_2',
+			projectId: 'proj_awesome',
+			title: 'Mobile responsive design',
+			description: 'Improve mobile responsiveness and add touch gestures',
+			skills: '["CSS","React","Mobile"]',
+			amount: 300,
+			priority: 'medium' as const,
+			deadline: new Date(now.getTime() + 45 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_alice'
+		},
+		{
+			id: 'bounty_3',
+			projectId: 'proj_ml_lib',
+			title: 'Add model explainability',
+			description: 'Implement SHAP values calculation for model predictions',
+			skills: '["Python","Machine Learning","NumPy"]',
+			amount: 800,
+			priority: 'high' as const,
+			deadline: new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_bob'
+		},
+		{
+			id: 'bounty_4',
+			projectId: 'proj_ml_lib',
+			title: 'Optimize training speed',
+			description: 'Add GPU acceleration support using CUDA',
+			skills: '["Python","CUDA","Deep Learning"]',
+			amount: 1200,
+			priority: 'medium' as const,
+			deadline: new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_bob'
+		},
+		{
+			id: 'bounty_5',
+			projectId: 'proj_defi_swap',
+			title: 'Add limit orders',
+			description: 'Implement limit order functionality for the DEX',
+			skills: '["Solidity","TypeScript","Web3"]',
+			amount: 1500,
+			priority: 'high' as const,
+			deadline: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_carol'
+		},
+		{
+			id: 'bounty_6',
+			projectId: 'proj_defi_swap',
+			title: 'Improve gas efficiency',
+			description: 'Optimize contract gas usage and reduce transaction costs',
+			skills: '["Solidity","Gas Optimization"]',
+			amount: 2000,
+			priority: 'high' as const,
+			deadline: new Date(now.getTime() + 21 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_carol'
+		},
+		{
+			id: 'bounty_7',
+			projectId: 'proj_cloud_cli',
+			title: 'AWS provider support',
+			description: 'Add AWS as a cloud provider with full resource management',
+			skills: '["Go","AWS SDK","CLI"]',
+			amount: 1000,
+			priority: 'high' as const,
+			deadline: new Date(now.getTime() + 45 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_dave'
+		},
+		{
+			id: 'bounty_8',
+			projectId: 'proj_cloud_cli',
+			title: 'Terraform export',
+			description: 'Add functionality to export current state to Terraform',
+			skills: '["Go","Terraform","HCL"]',
+			amount: 600,
+			priority: 'medium' as const,
+			deadline: new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_dave'
+		},
+		{
+			id: 'bounty_9',
+			projectId: 'proj_mobile_app',
+			title: 'iOS biometric auth',
+			description: 'Implement Face ID and Touch ID authentication for iOS',
+			skills: '["React Native","iOS","Biometrics"]',
+			amount: 750,
+			priority: 'high' as const,
+			deadline: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+			status: 'open' as const,
+			createdBy: 'user_carol'
+		}
+	];
 
-	await client.execute({
-		sql: `INSERT INTO projects (id, name, description, repoUrl, website, category, ownerId, type, isBountyEnabled, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'proj_awesome',
-			'Awesome App',
-			'A modern web application for managing tasks and projects with real-time collaboration',
-			'https://github.com/example/awesome-app',
-			'https://awesome-app.example.com',
-			'web',
-			'user_alice',
-			'individual',
-			1,
-			now
-		]
-	});
+	for (const b of bountyData) {
+		await db.insert(schema.bounties).values({ ...b, createdAt: now });
+	}
+	console.log(`Created ${bountyData.length} bounties`);
 
-	await client.execute({
-		sql: `INSERT INTO projects (id, name, description, repoUrl, website, category, ownerId, type, isBountyEnabled, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'proj_ml_lib',
-			'ML Library',
-			'A lightweight machine learning library for Python with focus on interpretability',
-			'https://github.com/example/ml-library',
-			'https://ml-lib.example.com',
-			'ai-ml',
-			'user_bob',
-			'individual',
-			1,
-			now
-		]
-	});
+	// Create bounty contributions
+	const contributions = [
+		{ id: 'contrib_1', bountyId: 'bounty_1', userId: 'user_bob', amount: 200 },
+		{ id: 'contrib_2', bountyId: 'bounty_1', userId: 'user_carol', amount: 300 },
+		{ id: 'contrib_3', bountyId: 'bounty_5', userId: 'user_dave', amount: 500 },
+		{ id: 'contrib_4', bountyId: 'bounty_5', userId: 'user_alice', amount: 1000 }
+	];
 
-	await client.execute({
-		sql: `INSERT INTO projects (id, name, description, repoUrl, website, category, ownerId, type, isBountyEnabled, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'proj_defi_swap',
-			'DeFi Swap',
-			'Decentralized exchange protocol with low fees and fast transactions',
-			'https://github.com/example/defi-swap',
-			'https://defi-swap.example.com',
-			'blockchain',
-			'user_carol',
-			'individual',
-			1,
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO projects (id, name, description, repoUrl, website, category, ownerId, type, isBountyEnabled, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'proj_cloud_cli',
-			'Cloud CLI',
-			'Command-line tool for managing cloud infrastructure across multiple providers',
-			'https://github.com/example/cloud-cli',
-			'',
-			'devtools',
-			'user_dave',
-			'individual',
-			1,
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO projects (id, name, description, repoUrl, website, category, ownerId, type, isBountyEnabled, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'proj_mobile_app',
-			'Mobile Wallet',
-			'Cross-platform mobile wallet for cryptocurrencies',
-			'https://github.com/example/mobile-wallet',
-			'https://mobile-wallet.example.com',
-			'mobile',
-			'user_carol',
-			'individual',
-			1,
-			now
-		]
-	});
-
-	console.log('Created projects');
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_1',
-			'proj_awesome',
-			'Add real-time collaboration',
-			'Implement real-time collaboration using WebSockets for multiple users editing tasks simultaneously',
-			'["React", "WebSocket", "Node.js"]',
-			500,
-			'high',
-			now + 30 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_alice',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_2',
-			'proj_awesome',
-			'Mobile responsive design',
-			'Improve mobile responsiveness and add touch gestures for the task board',
-			'["CSS", "React", "Mobile"]',
-			300,
-			'medium',
-			now + 45 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_alice',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_3',
-			'proj_ml_lib',
-			'Add model explainability',
-			'Implement SHAP values calculation for model predictions',
-			'["Python", "Machine Learning", "NumPy"]',
-			800,
-			'high',
-			now + 60 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_bob',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_4',
-			'proj_ml_lib',
-			'Optimize training speed',
-			'Add GPU acceleration support using CUDA for faster model training',
-			'["Python", "CUDA", "Deep Learning"]',
-			1200,
-			'medium',
-			now + 90 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_bob',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_5',
-			'proj_defi_swap',
-			'Add limit orders',
-			'Implement limit order functionality for the DEX',
-			'["Solidity", "TypeScript", "Web3"]',
-			1500,
-			'high',
-			now + 30 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_carol',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_6',
-			'proj_defi_swap',
-			'Improve gas efficiency',
-			'Optimize contract gas usage and reduce transaction costs',
-			'["Solidity", "Gas Optimization"]',
-			2000,
-			'high',
-			now + 21 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_carol',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_7',
-			'proj_cloud_cli',
-			'AWS provider support',
-			'Add AWS as a cloud provider with full resource management',
-			'["Go", "AWS SDK", "CLI"]',
-			1000,
-			'high',
-			now + 45 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_dave',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_8',
-			'proj_cloud_cli',
-			'Terraform export',
-			'Add functionality to export current state to Terraform configuration',
-			'["Go", "Terraform", "HCL"]',
-			600,
-			'medium',
-			now + 60 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_dave',
-			now
-		]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounties (id, projectId, title, description, skills, amount, priority, deadline, status, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		args: [
-			'bounty_9',
-			'proj_mobile_app',
-			'iOS biometric auth',
-			'Implement Face ID and Touch ID authentication for iOS',
-			'["React Native", "iOS", "Biometrics"]',
-			750,
-			'high',
-			now + 30 * 24 * 60 * 60 * 1000,
-			'open',
-			'user_carol',
-			now
-		]
-	});
-
-	console.log('Created bounties');
-
-	await client.execute({
-		sql: `INSERT INTO bounty_contributions (id, bountyId, userId, amount, createdAt) VALUES (?, ?, ?, ?, ?)`,
-		args: ['contrib_1', 'bounty_1', 'user_bob', 200, now]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounty_contributions (id, bountyId, userId, amount, createdAt) VALUES (?, ?, ?, ?, ?)`,
-		args: ['contrib_2', 'bounty_1', 'user_carol', 300, now]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounty_contributions (id, bountyId, userId, amount, createdAt) VALUES (?, ?, ?, ?, ?)`,
-		args: ['contrib_3', 'bounty_5', 'user_dave', 500, now]
-	});
-
-	await client.execute({
-		sql: `INSERT INTO bounty_contributions (id, bountyId, userId, amount, createdAt) VALUES (?, ?, ?, ?, ?)`,
-		args: ['contrib_4', 'bounty_5', 'user_alice', 1000, now]
-	});
-
-	console.log('Created bounty contributions');
+	for (const c of contributions) {
+		await db.insert(schema.bountyContributions).values({ ...c, createdAt: now });
+	}
+	console.log(`Created ${contributions.length} contributions`);
 
 	console.log('Seed complete!');
 }
 
-seed().catch(console.error);
+seed().catch((err) => {
+	console.error('Seed failed:', err);
+	process.exit(1);
+});

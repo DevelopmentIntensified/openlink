@@ -321,8 +321,8 @@
 				<div class="card p-6 mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
 					<h2 class="text-lg font-semibold mb-3">Created by</h2>
 					<a href="/profile/{bounty.creator.username}" class="flex items-center gap-3 text-indigo-600 hover:text-indigo-800 transition-colors">
-						{#if bounty.creator.avatarUrl}
-							<img src={bounty.creator.avatarUrl} alt={bounty.creator.username} class="w-10 h-10 rounded-full" />
+						{#if bounty.creator.image}
+							<img src={bounty.creator.image} alt={bounty.creator.username} class="w-10 h-10 rounded-full" />
 						{:else}
 							<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-bold">
 								{bounty.creator.username.charAt(0).toUpperCase()}
@@ -341,8 +341,8 @@
 				<div class="card p-6 mb-6 animate-fade-in-up" style="animation-delay: 0.3s;">
 					<h2 class="text-lg font-semibold mb-3">Assigned to</h2>
 					<a href="/profile/{bounty.assignee.username}" class="flex items-center gap-3 text-indigo-600 hover:text-indigo-800 transition-colors">
-						{#if bounty.assignee.avatarUrl}
-							<img src={bounty.assignee.avatarUrl} alt={bounty.assignee.username} class="w-10 h-10 rounded-full" />
+						{#if bounty.assignee.image}
+							<img src={bounty.assignee.image} alt={bounty.assignee.username} class="w-10 h-10 rounded-full" />
 						{:else}
 							<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-bold">
 								{bounty.assignee.username.charAt(0).toUpperCase()}
