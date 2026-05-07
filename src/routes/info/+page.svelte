@@ -71,7 +71,7 @@
 				Join hundreds of developers and sponsors already using BountyForge to build the future of open source.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4">
-				<a href="/auth/signup" class="inline-flex items-center justify-center px-6 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105 shadow-lg">
+				<a href="/dev/signup" class="inline-flex items-center justify-center px-6 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105 shadow-lg">
 					Sign Up
 				</a>
 				<a href="/explore" class="inline-flex items-center justify-center px-6 py-3 border border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-200 hover:scale-105">

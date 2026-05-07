@@ -23,7 +23,8 @@ export const user = sqliteTable("user", {
   onboardingComplete: integer("onboarding_complete", { mode: "boolean" }).default(false),
   companyName: text("company_name").default(''),
   companyWebsite: text("company_website").default(''),
-  companyDescription: text("company_description").default('')
+  companyDescription: text("company_description").default(''),
+  username: text("username").default('').unique()
 });
 
 export const session = sqliteTable(

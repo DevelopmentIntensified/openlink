@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ request }) => {
 	});
 
 	if (!session?.user) {
-		throw redirect(302, '/auth/login');
+		throw redirect(302, '/login');
 	}
 
 	const user = session.user as UserWithRoles;

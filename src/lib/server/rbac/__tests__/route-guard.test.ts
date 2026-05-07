@@ -62,7 +62,7 @@ describe('Route Guard - RBAC Enforcement', () => {
 			const result = checkRouteAccess('/dev/dashboard', null);
 
 			expect(result.allowed).toBe(false);
-			expect(result.redirect).toBe('/auth/login');
+			expect(result.redirect).toBe('/login');
 		});
 
 		it('should allow access when user has both roles and visits either prefix', () => {

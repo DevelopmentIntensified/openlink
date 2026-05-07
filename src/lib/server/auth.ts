@@ -5,13 +5,14 @@ import { getRequestEvent } from '$app/server';
 import { env } from '$env/dynamic/private';
 import { db } from '$lib/server/db';
 
+const isProduction = env.NODE_ENV === 'production';
+
 export const authConfig = {
 	baseURL: env.ORIGIN,
 	secret: env.BETTER_AUTH_SECRET,
-	trustedOrigins:
-		env.NODE_ENV === 'production'
-			? [env.ORIGIN!, 'https://bountyforge.dev']
-			: [env.ORIGIN!, 'http://localhost:5173', 'http://localhost:4173'],
+	trustedOrigins: isProduction
+		? [env.ORIGIN!, 'https://bountyforge.dev']
+		: [env.ORIGIN!, 'http://localhost:5173', 'http://localhost:4173'],
 	database: drizzleAdapter(db, { provider: 'sqlite' }),
 	emailAndPassword: {
 		enabled: true,
@@ -48,11 +49,11 @@ export const authConfig = {
 		}
 	},
 	session: {
-		expiresIn: 60 * 60 * 24 * 7, // 7 days
-		updateAge: 60 * 60 * 24, // 24 hours
+		expiresIn: 60 * 60 * 24 * 7,
+		updateAge: 60 * 60 * 24,
 		cookieCache: {
 			enabled: true,
-			maxAge: 60 * 5, // 5 minutes
+			maxAge: 60 * 5,
 			strategy: 'compact'
 		}
 	},
@@ -60,13 +61,17 @@ export const authConfig = {
 		ipAddress: {
 			ipAddressHeaders: ['x-forwarded-for', 'x-real-ip', 'cf-connecting-ip']
 		},
-		useSecureCookies: env.NODE_ENV === 'production',
+		useSecureCookies: isProduction,
 		disableCSRFCheck: false,
 		disableOriginCheck: false,
 		cookiePrefix: 'bountyforge'
 	},
 	plugins: [sveltekitCookies(getRequestEvent)],
 	userAdditionalFields: {
+		username: {
+			type: 'string',
+			defaultValue: ''
+		},
 		roles: {
 			type: 'array',
 			items: { type: 'string' },

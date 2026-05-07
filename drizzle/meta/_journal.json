@@ -8,6 +8,13 @@
       "when": 1778007095553,
       "tag": "0000_dusty_lady_deathstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1778080386302,
+      "tag": "0001_crazy_groot",
+      "breakpoints": true
     }
   ]
 }

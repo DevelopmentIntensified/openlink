@@ -39,13 +39,13 @@ export function checkRouteAccess(
 
 	// Unauthenticated user
 	if (!userRoles) {
-		return { allowed: false, redirect: '/auth/login' };
+		return { allowed: false, redirect: '/login' };
 	}
 
 	// Empty roles array = no access
 	if (userRoles.length === 0) {
 		const roleParam = matchedRoute.role;
-		return { allowed: false, redirect: `/auth/signup?role=${roleParam}` };
+		return { allowed: false, redirect: `/${roleParam}/signup` };
 	}
 
 	// Check if user has required role
@@ -53,7 +53,7 @@ export function checkRouteAccess(
 
 	if (!hasRequiredRole) {
 		const roleParam = matchedRoute.role;
-		return { allowed: false, redirect: `/auth/signup?role=${roleParam}` };
+		return { allowed: false, redirect: `/${roleParam}/signup` };
 	}
 
 	return { allowed: true };

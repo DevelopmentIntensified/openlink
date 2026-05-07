@@ -165,7 +165,7 @@
 				<a href="/login" class="btn-primary btn-lift">
 					Sign In
 				</a>
-				<a href="/auth/signup" class="btn-primary-gradient btn-lift">
+				<a href="/dev/signup" class="btn-primary-gradient btn-lift">
 					Sign Up
 				</a>
 			</div>
