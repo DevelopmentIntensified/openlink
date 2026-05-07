@@ -24,7 +24,7 @@ export const user = pgTable("user", {
   companyName: text("company_name").default(''),
   companyWebsite: text("company_website").default(''),
   companyDescription: text("company_description").default(''),
-  username: text("username").default('').unique()
+  username: text("username").unique()
 });
 
 export const session = pgTable(

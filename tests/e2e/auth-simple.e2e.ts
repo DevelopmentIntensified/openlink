@@ -31,15 +31,21 @@ export async function createSession(request: any, email: string, password: strin
 		data: { email, password }
 	});
 
-	const data = await response.json();
-	
-	if (!data.session?.token) {
-		throw new Error(`Failed to create session: ${JSON.stringify(data)}`);
+	// Parse session token from Set-Cookie header
+	const setCookie = response.headers()['set-cookie'];
+	if (!setCookie) {
+		const data = await response.json();
+		throw new Error(`No Set-Cookie header: ${JSON.stringify(data)}`);
+	}
+
+	const match = setCookie.match(/bountyforge\.session_token=([^;]+)/);
+	if (!match?.[1]) {
+		throw new Error(`No session token in cookie: ${setCookie}`);
 	}
 
 	return {
-		name: 'bountyforge_session_token',
-		value: data.session.token,
+		name: 'bountyforge.session_token',
+		value: decodeURIComponent(match[1]),
 		domain: 'localhost',
 		path: '/',
 		httpOnly: true,

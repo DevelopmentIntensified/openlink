@@ -86,17 +86,17 @@
 	<form onsubmit={handleSubmit}>
 		<div>
 			<label for="companyName">Company Name *</label>
-			<input id="companyName" bind:value={companyName} type="text" required />
+			<input id="companyName" name="companyName" bind:value={companyName} type="text" required />
 		</div>
 
 		<div>
 			<label for="companyWebsite">Company Website</label>
-			<input id="companyWebsite" bind:value={companyWebsite} type="url" placeholder="https://..." />
+			<input id="companyWebsite" name="companyWebsite" bind:value={companyWebsite} type="url" placeholder="https://..." />
 		</div>
 
 		<div>
 			<label for="companyDescription">Company Description</label>
-			<textarea id="companyDescription" bind:value={companyDescription} rows="4"></textarea>
+			<textarea id="companyDescription" name="companyDescription" bind:value={companyDescription} rows="4"></textarea>
 		</div>
 
 		<button type="submit">Save Profile</button>

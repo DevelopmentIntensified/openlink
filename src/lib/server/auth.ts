@@ -52,9 +52,7 @@ export const authConfig = {
 		expiresIn: 60 * 60 * 24 * 7,
 		updateAge: 60 * 60 * 24,
 		cookieCache: {
-			enabled: true,
-			maxAge: 60 * 5,
-			strategy: 'compact'
+			enabled: false
 		}
 	},
 	advanced: {
@@ -67,44 +65,44 @@ export const authConfig = {
 		cookiePrefix: 'bountyforge'
 	},
 	plugins: [sveltekitCookies(getRequestEvent)],
-	userAdditionalFields: {
-		username: {
-			type: 'string',
-			defaultValue: ''
-		},
-		roles: {
-			type: 'array',
-			items: { type: 'string' },
-			defaultValue: ['dev']
-		},
-		bio: {
-			type: 'string',
-			defaultValue: ''
-		},
-		skills: {
-			type: 'array',
-			items: { type: 'string' },
-			defaultValue: []
-		},
-		githubUrl: {
-			type: 'string',
-			defaultValue: ''
-		},
-		onboardingComplete: {
-			type: 'boolean',
-			defaultValue: false
-		},
-		companyName: {
-			type: 'string',
-			defaultValue: ''
-		},
-		companyWebsite: {
-			type: 'string',
-			defaultValue: ''
-		},
-		companyDescription: {
-			type: 'string',
-			defaultValue: ''
+	user: {
+		additionalFields: {
+			username: {
+				type: 'string',
+				defaultValue: ''
+			},
+			roles: {
+				type: 'string[]',
+				defaultValue: ['dev']
+			},
+			bio: {
+				type: 'string',
+				defaultValue: ''
+			},
+			skills: {
+				type: 'string[]',
+				defaultValue: []
+			},
+			githubUrl: {
+				type: 'string',
+				defaultValue: ''
+			},
+			onboardingComplete: {
+				type: 'boolean',
+				defaultValue: false
+			},
+			companyName: {
+				type: 'string',
+				defaultValue: ''
+			},
+			companyWebsite: {
+				type: 'string',
+				defaultValue: ''
+			},
+			companyDescription: {
+				type: 'string',
+				defaultValue: ''
+			}
 		}
 	}
 };

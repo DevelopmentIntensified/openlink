@@ -40,12 +40,16 @@ test.describe('Developer Journey - Working', () => {
 		const email = `dev-journey-${Date.now()}@example.com`;
 		const password = 'devpassword123';
 
-		// Create user and session
-		const cookie = await createSession(request, email, password, 'Dev Journey');
-		
-		// Set cookie and navigate
-		await page.context().addCookies([cookie]);
-		await page.goto('/dev/dashboard');
+		// Create user via API
+		await request.post(`${BASE_URL}/api/auth/signup`, {
+			data: { email, password, name: 'Dev Journey', role: 'dev' }
+		});
+
+		// Login via form
+		await page.goto('/login');
+		await page.fill('input[name="email"]', email);
+		await page.fill('input[name="password"]', password);
+		await page.click('button[type="submit"]');
 		await page.waitForLoadState('networkidle', { timeout: 10000 });
 
 		const url = page.url();

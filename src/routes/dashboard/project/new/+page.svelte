@@ -51,7 +51,8 @@
 			
 			if (response.ok) {
 				const result = await response.json();
-				goto(`/project/${result.projectId}`);
+				const projectId = result.data?.projectId ?? result.projectId;
+				goto(`/project/${projectId}`);
 			} else {
 				console.error('Form submission failed:', await response.text());
 			}

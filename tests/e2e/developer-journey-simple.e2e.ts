@@ -1,54 +1,37 @@
-/**
- * Developer Journey E2E Test - Simplified
- * Tests core developer flows
- */
-
 import { test, expect } from '@playwright/test';
 
 const BASE_URL = 'http://localhost:5173';
 
+async function loginViaForm(page: any, email: string, password: string) {
+	await page.goto('/login');
+	await page.fill('input[name="email"]', email);
+	await page.fill('input[name="password"]', password);
+	await page.click('button[type="submit"]');
+	await page.waitForLoadState('networkidle', { timeout: 10000 });
+}
+
 test.describe('Developer Journey - Simplified', () => {
-	test('1. should access developer dashboard with session', async ({ page, request }) => {
-		const email = `dev-${Date.now()}@example.com`;
-		const password = 'devpassword123';
+	const timestamp = Date.now();
+	const devEmail = `dev-simple-${timestamp}@example.com`;
+	const devPassword = 'devpassword123';
 
-		// Create user and session
+	test.beforeAll(async ({ request }) => {
+		// Create test user via API
 		await request.post(`${BASE_URL}/api/auth/signup`, {
-			data: { email, password, name: 'Dev Test', role: 'dev' }
+			data: { email: devEmail, password: devPassword, name: 'Dev Simple', role: 'dev' }
 		});
+	});
 
-		const loginResponse = await request.post(`${BASE_URL}/api/auth/login`, {
-			data: { email, password }
-		});
+	test('1. should access developer dashboard with session', async ({ page }) => {
+		await loginViaForm(page, devEmail, devPassword);
 
-		const setCookie = loginResponse.headers()['set-cookie'];
-		const match = setCookie?.match(/bountyforge\.session_token=([^;]+)/);
-		
-		if (match && match[1]) {
-			await page.context().addCookies([{
-				name: 'bountyforge.session_token',
-				value: decodeURIComponent(match[1]),
-				domain: 'localhost',
-				path: '/'
-			}]);
-		}
-
-		await page.goto('/dev/dashboard');
-		await page.waitForLoadState('networkidle', { timeout: 10000 });
-		
 		const url = page.url();
 		console.log('Dashboard URL:', url);
-		
-		// Should be on dashboard or redirected to onboarding
 		expect(url).toMatch(/dashboard|onboarding/);
 	});
 
 	test('2. should view explore page', async ({ page }) => {
 		await page.goto('/explore');
-		await page.waitForLoadState('networkidle', { timeout: 10000 });
-		
-		// Should show explore page
-		const url = page.url();
-		expect(url).toContain('/explore');
+		await expect(page.locator('h1')).toContainText('Explore Projects');
 	});
 });

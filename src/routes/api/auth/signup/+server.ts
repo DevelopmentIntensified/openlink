@@ -23,13 +23,17 @@ export async function POST({ request }) {
 		// Prepare user data with roles for Better Auth
 		const userData = prepareUserData(data);
 
+		// Generate username from email (part before @)
+		const username = data.email.split('@')[0].toLowerCase().replace(/[^a-z0-9_]/g, '');
+
 		// Create user with Better Auth
 		const result = await auth.api.signUpEmail({
 			body: {
 				email: userData.email,
 				password: userData.password,
 				name: userData.name,
-				roles: userData.roles
+				roles: userData.roles,
+				username
 			}
 		});
 

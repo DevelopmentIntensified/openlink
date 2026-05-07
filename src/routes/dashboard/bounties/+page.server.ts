@@ -4,13 +4,13 @@ import { getBountiesByUser, getBountiesByProject, getAllBounties } from '$lib/se
 import { getProjectsByOwner } from '$lib/server/lib/projects';
 
 export const load: PageServerLoad = async (event) => {
-	const session = event.locals.session;
+	const session = await event.locals.auth.api.getSession({ headers: event.request.headers });
 
 	if (!session) {
 		throw redirect(302, '/login');
 	}
 
-	const userId = session.userId;
+	const userId = session.user.id;
 
 	// Get user role from session or database
 	// For now, assume we can determine if user is a sponsor

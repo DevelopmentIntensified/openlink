@@ -1,0 +1,442 @@
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m1251[22m[2m[0m ms[22m
+
+  [32mΓ₧£[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+  [32mΓ₧£[39m  [1mNetwork[22m: [36mhttp://192.168.1.234:[1m5173[22m/[39m
+  [32mΓ₧£[39m  [1mNetwork[22m: [36mhttp://172.22.176.1:[1m5173[22m/[39m
+[2m[32m  Γ₧£[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+2026-05-07T15:08:59.935Z WARN [Better Auth]: Social provider google is missing clientId or clientSecret
+Send verification email to test-login-1778166556711@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtbG9naW4tMTc3ODE2NjU1NjcxMUBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU1NywiZXhwIjoxNzc4MTcwMTU3fQ.jxAdKKCrIbocYtdA-rRrDgi_7-M7xx0hj-BgyyHCwt8&callbackURL=%2F
+Login error: Redirect { status: 303, location: '/dashboard' }
+2026-05-07T15:09:19.795Z ERROR [Better Auth]: User not found { email: 'nonexistent@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to test-protected@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtcHJvdGVjdGVkQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTYxLCJleHAiOjE3NzgxNzAxNjF9.yUPa8bsvOq7JSHl1A3GyOj5td2CMVPmFyJR7n9_YrxU&callbackURL=%2F
+Send verification email to dev-1778166564026@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi0xNzc4MTY2NTY0MDI2QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTY0LCJleHAiOjE3NzgxNzAxNjR9.KAZ2amw2Ye_qrQaGQuf_fu2WTAMI97GD3UMhCW_5c3A&callbackURL=%2F
+Send verification email to sponsor-1778166566064@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3ItMTc3ODE2NjU2NjA2NEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU2NiwiZXhwIjoxNzc4MTcwMTY2fQ.3N4KFDSFknesj_dsJVvjS6eMYgqTA6UaEMy_6kjt8bc&callbackURL=%2F
+Send verification email to test-logout-1778166567490@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtbG9nb3V0LTE3NzgxNjY1Njc0OTBAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1NjcsImV4cCI6MTc3ODE3MDE2N30.OKLCttGJrmILmeovSa-HV5SC2mDFbOmPgUtHq1mGN8I&callbackURL=%2F
+Send verification email to fytf@gft.guy: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImZ5dGZAZ2Z0Lmd1eSIsImlhdCI6MTc3ODE2NjU3NiwiZXhwIjoxNzc4MTcwMTc2fQ.VAxj5IoQzICkGPINbA27t-ehOmVkFNVh6Fr_caG3bPw&callbackURL=%2F
+2026-05-07T15:09:40.158Z ERROR [Better Auth]: User not found { email: 'rate-limit-test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+2026-05-07T15:09:40.366Z ERROR [Better Auth]: User not found { email: 'rate-limit-test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+2026-05-07T15:09:40.780Z ERROR [Better Auth]: User not found { email: 'rate-limit-test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to dev-1778166580319@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi0xNzc4MTY2NTgwMzE5QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTgxLCJleHAiOjE3NzgxNzAxODF9.nBRTY9LCzzDW3MMqATQjookonQmvl96sd-H-DaJyiAw&callbackURL=%2F
+Send verification email to dev-journey-1778166581006@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1ODEwMDZAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODEsImV4cCI6MTc3ODE3MDE4MX0.YHWwAJNwzfrdg40mSaqseI91Z7LD8J9-kxk6nZWYNpY&callbackURL=%2F
+Send verification email to test-simple@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3Qtc2ltcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTgxLCJleHAiOjE3NzgxNzAxODF9.Vy6hTbf8fZLGQDAvcAvyulw6Pw4yyl0q13Mc_ogVkHE&callbackURL=%2F
+Send verification email to test-correct-cookie@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtY29ycmVjdC1jb29raWVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODEsImV4cCI6MTc3ODE3MDE4MX0.eLMhDE9qIjQLxR25Os3qqxooMAaYMGgz0Qg0QIadg4Q&callbackURL=%2F
+Send verification email to dev-journey-1778166580303@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1ODAzMDNAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODEsImV4cCI6MTc3ODE3MDE4MX0.XOpJ6QPAoVlUP-R3ynYyJInYgDOiuuKP_CPSeHzxntA&callbackURL=%2F
+Send verification email to test-session@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3Qtc2Vzc2lvbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU4MSwiZXhwIjoxNzc4MTcwMTgxfQ.yEqo_D3TUyMgRqae4pKpSQMcFPuKyWFJUxZGuh971Ac&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+2026-05-07T15:09:42.512Z ERROR [Better Auth]: User not found { email: 'test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to test-login-1778166582299@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtbG9naW4tMTc3ODE2NjU4MjI5OUBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU4MiwiZXhwIjoxNzc4MTcwMTgyfQ.-p4tf70wVTHGmlyB5fJzkM_DlWC-u33SJ6apwfegzFc&callbackURL=%2F
+Send verification email to dev-journey-1778166583022@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1ODMwMjJAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODMsImV4cCI6MTc3ODE3MDE4M30.VkOwxU7qZ20V1jnklUA4oRdrA_7d6dEy_Ug0OJXNe5U&callbackURL=%2F
+Login error: Redirect { status: 303, location: '/dashboard' }
+Send verification email to test-1778166584225@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtMTc3ODE2NjU4NDIyNUBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU4NCwiZXhwIjoxNzc4MTcwMTg0fQ.PsQ6PuYoEwkRnWvxRQemAyhHeBA8-gjeYijT69dAkfg&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+2026-05-07T15:09:45.131Z ERROR [Better Auth]: User not found { email: 'test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to project-create-1778166584711@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByb2plY3QtY3JlYXRlLTE3NzgxNjY1ODQ3MTFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODUsImV4cCI6MTc3ODE3MDE4NX0.qtk5WGIY2CMG495bGUXS4awYoCnU0Kxa-IoobJBGGSs&callbackURL=%2F
+2026-05-07T15:09:45.779Z ERROR [Better Auth]: User not found { email: 'nonexistent@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to dev-journey-1778166585379@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1ODUzNzlAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODUsImV4cCI6MTc3ODE3MDE4NX0.rQmuBwWFfmVHoMaDKClYNTCo0_26F874BijvT31bcLM&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to sponsor-journey-1778166586978@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3Itam91cm5leS0xNzc4MTY2NTg2OTc4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTg3LCJleHAiOjE3NzgxNzAxODd9.sFSo0kHgQRjfpaG01br3vgo6ZgHLfUzVZxyzFb5Xi8Q&callbackURL=%2F
+Send verification email to dev-journey-1778166587548@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1ODc1NDhAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODcsImV4cCI6MTc3ODE3MDE4N30.Wx5jTZRIdmLkgDudwiJETpHlBUlpTfKxdtpl22N5mxA&callbackURL=%2F
+Send verification email to dev2-1778166587427@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldjItMTc3ODE2NjU4NzQyN0BleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU4NywiZXhwIjoxNzc4MTcwMTg3fQ.rPM7WiNNv3ee77__9XR6-fK8xqAL3_Orb8mCW4h-z2s&callbackURL=%2F
+2026-05-07T15:09:49.086Z ERROR [Better Auth]: User not found { email: 'test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to project-list-1778166588695@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByb2plY3QtbGlzdC0xNzc4MTY2NTg4Njk1QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTg5LCJleHAiOjE3NzgxNzAxODl9.K9KW3y-lfDyssd8aB5S-Q7J64izQ0nURx7jozKXUlWk&callbackURL=%2F
+Send verification email to dev-journey-1778166589594@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1ODk1OTRAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1ODksImV4cCI6MTc3ODE3MDE4OX0.TlAZq5whZlKp-vCK9LUiutrRD7Ie1loEMTRd2AAWeCw&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to sponsor-journey-1778166590267@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3Itam91cm5leS0xNzc4MTY2NTkwMjY3QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTkwLCJleHAiOjE3NzgxNzAxOTB9._tJJZolMtZl0kVtNkO3ob4ZfilsHp15YSL2-RugM5ps&callbackURL=%2F
+Send verification email to dev-1778166590481@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi0xNzc4MTY2NTkwNDgxQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTkxLCJleHAiOjE3NzgxNzAxOTF9.UAhaai0RL0A_Cwlxx3t2BivLSeiZn3nA7MtVwuAUSb0&callbackURL=%2F
+Send verification email to project-view-1778166591493@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByb2plY3Qtdmlldy0xNzc4MTY2NTkxNDkzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY2NTkxLCJleHAiOjE3NzgxNzAxOTF9.6_lkN0ptHhb5Cae0Eh9sxRy9dMsCR30Q67nzIFtHyes&callbackURL=%2F
+Send verification email to dev-journey-1778166591535@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjY1OTE1MzVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjY1OTEsImV4cCI6MTc3ODE3MDE5MX0.j8SjUkz-A6FhCLEpIhdFhCuInwGbY3vXI2XJBzptaWM&callbackURL=%2F
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/0.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/1.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/2.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/4.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/8.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/13.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/16.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/24.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/app.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/server/internal.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/25.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/29.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/32.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/36.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/matchers.js[22m
+[2m11:09:52 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/root.js[22m
+2026-05-07T15:09:52.680Z WARN [Better Auth]: Social provider google is missing clientId or clientSecret
+2026-05-07T15:09:52.845Z ERROR [Better Auth]: User not found { email: 'test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to sponsor-1778166592662@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3ItMTc3ODE2NjU5MjY2MkBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NjU5MywiZXhwIjoxNzc4MTcwMTkzfQ.iQyKD0eqe0MXVqPk-LRGRcbYRmOEX62fDQjcarXo-ao&callbackURL=%2F
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m18953[22m[2m[0m ms[22m
+
+  [32mΓ₧£[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+  [32mΓ₧£[39m  [1mNetwork[22m: [36mhttp://192.168.1.234:[1m5173[22m/[39m
+  [32mΓ₧£[39m  [1mNetwork[22m: [36mhttp://172.22.176.1:[1m5173[22m/[39m
+[2m[32m  Γ₧£[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+2026-05-07T15:19:08.709Z WARN [Better Auth]: Social provider google is missing clientId or clientSecret
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m1210[22m[2m[0m ms[22m
+
+  [32mΓ₧£[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+  [32mΓ₧£[39m  [1mNetwork[22m: [36mhttp://192.168.1.234:[1m5173[22m/[39m
+  [32mΓ₧£[39m  [1mNetwork[22m: [36mhttp://172.22.176.1:[1m5173[22m/[39m
+[2m[32m  Γ₧£[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+2026-05-07T15:20:00.195Z WARN [Better Auth]: Social provider google is missing clientId or clientSecret
+2026-05-07T15:20:01.467Z ERROR [Better Auth]: User not found { email: 'rate-limit-test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+2026-05-07T15:20:01.604Z ERROR [Better Auth]: User not found { email: 'rate-limit-test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Avoid calling `fetch` eagerly during server-side rendering ΓÇö put your `fetch` calls inside `onMount` or a `load` function instead
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+2026-05-07T15:20:01.865Z ERROR [Better Auth]: User not found { email: 'rate-limit-test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to dev-1778167194455@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi0xNzc4MTY3MTk0NDU1QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjAyLCJleHAiOjE3NzgxNzA4MDJ9.BlKbTer7w_kZsOafWvdoE-nqu3lg_3AMJGpiLqAgGxk&callbackURL=%2F
+Send verification email to dev-journey-1778167194450@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjcxOTQ0NTBAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjcyMDIsImV4cCI6MTc3ODE3MDgwMn0.YaupBSneXmmDASBi0aYWN7-_xypTzEUJVDoeLN1lsa0&callbackURL=%2F
+2026-05-07T15:20:03.229Z ERROR [Better Auth]: User not found { email: 'test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Avoid calling `fetch` eagerly during server-side rendering ΓÇö put your `fetch` calls inside `onMount` or a `load` function instead
+Avoid calling `fetch` eagerly during server-side rendering ΓÇö put your `fetch` calls inside `onMount` or a `load` function instead
+Send verification email to test-1778167203247@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtMTc3ODE2NzIwMzI0N0BleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NzIwMywiZXhwIjoxNzc4MTcwODAzfQ.6SIxQlF5mm_3HuH67zwyNdGsgojTjnIrIIvg76XiNVU&callbackURL=%2F
+2026-05-07T15:20:04.009Z ERROR [Better Auth]: User not found { email: 'test@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to test-1778167204022@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtMTc3ODE2NzIwNDAyMkBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NzIwNCwiZXhwIjoxNzc4MTcwODA0fQ.yADuHoDihmwuv2ml5I42nXu5Uy1cmo2fwA5t1BgBqBc&callbackURL=%2F
+Send verification email to dev-journey-1778167204561@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjcyMDQ1NjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjcyMDQsImV4cCI6MTc3ODE3MDgwNH0.w-catpUhHQDhMf8RJJQni_O05cfxFzZhaUJqXFy_KmM&callbackURL=%2F
+Send verification email to project-create-1778167205781@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByb2plY3QtY3JlYXRlLTE3NzgxNjcyMDU3ODFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjcyMDYsImV4cCI6MTc3ODE3MDgwNn0.05hCBlPMeCJ7HmoRP1MRkh4e7StVjNK7nnIWc-4MyK8&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to sponsor-journey-1778167206475@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3Itam91cm5leS0xNzc4MTY3MjA2NDc1QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjA2LCJleHAiOjE3NzgxNzA4MDZ9.bGgZ2oQ-6KIgZCzlabTD1OPJ97yc34JqiZwcTx9m3r0&callbackURL=%2F
+Send verification email to crud-test-1778167206472@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNydWQtdGVzdC0xNzc4MTY3MjA2NDcyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjA2LCJleHAiOjE3NzgxNzA4MDZ9.LonCB6bbABxDx8wmND6ZYGw2HuE2sGUf3T7N2pFA9Mw&callbackURL=%2F
+Send verification email to test-login-1778167207080@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtbG9naW4tMTc3ODE2NzIwNzA4MEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NzIwNywiZXhwIjoxNzc4MTcwODA3fQ.zWeL6quSEUzq2Fol78sda3gMfH50vKsXS94ti9hQgNA&callbackURL=%2F
+Login error: Redirect { status: 303, location: '/dashboard' }
+Avoid calling `fetch` eagerly during server-side rendering ΓÇö put your `fetch` calls inside `onMount` or a `load` function instead
+Send verification email to dev-journey-1778167209237@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi1qb3VybmV5LTE3NzgxNjcyMDkyMzdAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjcyMDksImV4cCI6MTc3ODE3MDgwOX0.NFjqS-h_13wzRSh70Iu46hk_F4ngYkCqRkwrbc66wvg&callbackURL=%2F
+Send verification email to project-list-1778167210298@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByb2plY3QtbGlzdC0xNzc4MTY3MjEwMjk4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjEwLCJleHAiOjE3NzgxNzA4MTB9.WA29d-WUfhpOfiMXyPOoMCc6bkCJL1wCcR0qi8qubnw&callbackURL=%2F
+Send verification email to sponsor-journey-1778167210434@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3Itam91cm5leS0xNzc4MTY3MjEwNDM0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjEwLCJleHAiOjE3NzgxNzA4MTB9.klKW8cTY6UZNZdgfQAOZQt53c5GQg0dzHU2V538ueVI&callbackURL=%2F
+2026-05-07T15:20:11.120Z ERROR [Better Auth]: User not found { email: 'nonexistent@example.com' }
+Login error: [InternalAPIError: Invalid email or password] {
+  status: 'UNAUTHORIZED',
+  body: {
+    code: 'INVALID_EMAIL_OR_PASSWORD',
+    message: 'Invalid email or password'
+  },
+  headers: {},
+  statusCode: 401
+}
+
+[500] POST /api/auth/login
+APIError: Invalid email or password
+Send verification email to dev2-1778167210749@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldjItMTc3ODE2NzIxMDc0OUBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NzIxMSwiZXhwIjoxNzc4MTcwODExfQ.ptyOuCOoxhIbDKh-H-h6mS46yo-jy2ZQGGSuN_ttU2A&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to project-view-1778167212901@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InByb2plY3Qtdmlldy0xNzc4MTY3MjEyOTAxQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjEzLCJleHAiOjE3NzgxNzA4MTN9.S4xQNo3W2tPgd_vvcqvjiBZo8-XYcYasL94qdx902FE&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to dev-1778167215182@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRldi0xNzc4MTY3MjE1MTgyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjE1LCJleHAiOjE3NzgxNzA4MTV9.8zh9E8Wqy9GaFTaxX-h_Up3caBL5IYFvg1YsnOOEKgE&callbackURL=%2F
+Signup error: [InternalAPIError: User already exists. Use another email.] {
+  status: 'UNPROCESSABLE_ENTITY',
+  body: {
+    code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+    message: 'User already exists. Use another email.'
+  },
+  headers: {},
+  statusCode: 422
+}
+Send verification email to sponsor-1778167217320@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3ItMTc3ODE2NzIxNzMyMEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODE2NzIxNywiZXhwIjoxNzc4MTcwODE3fQ.C9dEsl54QqgT3tHYquL8LwuGioJPUjiWocsg3Bkjql0&callbackURL=%2F
+Send verification email to test-logout-1778167218761@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QtbG9nb3V0LTE3NzgxNjcyMTg3NjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzgxNjcyMTgsImV4cCI6MTc3ODE3MDgxOH0.0Rit8yKJt-STACnQpPqHNNxtvLXS6iJLan8KHtZ-SE0&callbackURL=%2F
+Send verification email to crud-test-1778167269958@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNydWQtdGVzdC0xNzc4MTY3MjY5OTU4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjcwLCJleHAiOjE3NzgxNzA4NzB9.5mj0VnSAfTLnDA7RlITPa7VXXdOCw-DJ_lFVsdJUDEQ&callbackURL=%2F
+Send verification email to sponsor-journey-1778167272520@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3Itam91cm5leS0xNzc4MTY3MjcyNTIwQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MjcyLCJleHAiOjE3NzgxNzA4NzJ9.NOpIROXLfPfPUMntBJUeHP9OUhTYGsBiPj4hx7XUsDs&callbackURL=%2F
+Send verification email to sponsor-journey-1778167284728@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNwb25zb3Itam91cm5leS0xNzc4MTY3Mjg0NzI4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3Mjg1LCJleHAiOjE3NzgxNzA4ODV9.xzXZgJP5RIacqPlTpOR7v8ttzBR7Wek4dpaGsQFeZjA&callbackURL=%2F
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/0.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/1.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/2.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/3.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/8.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/13.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/16.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/13.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/8.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/app.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/server/internal.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/24.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/25.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/29.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/30.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/31.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/32.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/nodes/36.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/client/matchers.js[22m
+[2m11:22:12 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.svelte-kit/generated/root.js[22m
+Send verification email to crud-test-1778167331963@example.com: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNydWQtdGVzdC0xNzc4MTY3MzMxOTYzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc4MTY3MzMyLCJleHAiOjE3NzgxNzA5MzJ9.aSbQYpHzg2NnWuXypdEVSOBIFoB79mv4SMgJtGAJ9Fs&callbackURL=%2F
+2026-05-07T15:22:12.579Z WARN [Better Auth]: Social provider google is missing clientId or clientSecret
+[2m11:54:06 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/hooks.server.ts[22m
+[2m11:54:24 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/lib/server/auth.ts[22m
+[2m11:54:33 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/hooks.server.ts[22m
+[2m11:54:42 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/routes/dashboard/bounties/+page.server.ts[22m

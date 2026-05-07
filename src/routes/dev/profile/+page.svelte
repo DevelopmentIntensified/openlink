@@ -43,6 +43,40 @@
 			bio = data.user.bio;
 		}
 	});
+
+	function addSkill() {
+		if (newSkill.trim() && !skills.includes(newSkill.trim())) {
+			skills = [...skills, newSkill.trim()];
+			newSkill = '';
+		}
+	}
+
+	function removeSkill(skill: string) {
+		skills = skills.filter(s => s !== skill);
+	}
+
+	async function handleSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		message = '';
+		error = '';
+
+		try {
+			const response = await fetch('?/updateProfile', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ bio, githubUrl, skills })
+			});
+
+			if (response.ok) {
+				message = 'Profile updated successfully!';
+			} else {
+				const data = await response.json();
+				error = data.error || 'Failed to update profile';
+			}
+		} catch (e) {
+			error = 'An error occurred while saving your profile';
+		}
+	}
 </script>
 
 <div class="profile-container">
@@ -87,7 +121,7 @@
 
 	<div class="current-roles">
 		<h3>Your Roles</h3>
-		<p>{userRoles.join(', ')}</p>
+		<p>{roles.join(', ')}</p>
 	</div>
 
 	<a href="/dev/dashboard" class="back-link">← Back to Dashboard</a>

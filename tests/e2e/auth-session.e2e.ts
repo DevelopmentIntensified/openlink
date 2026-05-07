@@ -24,46 +24,21 @@ test.describe('Auth Session Tests', () => {
 	});
 
 	test('should be able to sign in and access protected route', async ({ page, request }) => {
-		// Get session token via test API
-		const response = await request.post(`${BASE_URL}/api/test/session`, {
+		// Sign in via login API
+		const loginResponse = await request.post(`${BASE_URL}/api/auth/login`, {
 			data: {
 				email: TEST_EMAIL,
-				password: TEST_PASSWORD,
-				apiKey: TEST_API_KEY
+				password: TEST_PASSWORD
 			}
 		});
 
-		const data = await response.json();
-		
-		// If session creation fails, try direct login
-		if (!data.success) {
-			// Use the working login API
-			const loginResponse = await request.post(`${BASE_URL}/api/auth/login`, {
-				data: {
-					email: TEST_EMAIL,
-					password: TEST_PASSWORD
-				}
-			});
-			
-			const loginData = await loginResponse.json();
-			
-			if (loginData.sessionToken) {
-				// Set cookie in page context
-				await page.context().addCookies([{
-					name: 'bountyforge_session_token',
-					value: loginData.sessionToken,
-					domain: 'localhost',
-					path: '/',
-					httpOnly: true,
-					secure: false,
-					sameSite: 'Lax'
-				}]);
-			}
-		} else {
-			// Set cookie from test API
+		// Parse session token from Set-Cookie header
+		const setCookie = loginResponse.headers()['set-cookie'];
+		const match = setCookie?.match(/bountyforge\.session_token=([^;]+)/);
+		if (match?.[1]) {
 			await page.context().addCookies([{
-				name: 'bountyforge_session_token',
-				value: data.sessionToken,
+				name: 'bountyforge.session_token',
+				value: decodeURIComponent(match[1]),
 				domain: 'localhost',
 				path: '/',
 				httpOnly: true,

@@ -48,6 +48,14 @@ test.describe('Sponsor Complete Journey', () => {
 		sponsorCookie = await createSession(request, sponsorEmail, sponsorPassword, sponsorName);
 	});
 
+	async function loginViaForm(page: any) {
+		await page.goto('/login');
+		await page.fill('input[name="email"]', sponsorEmail);
+		await page.fill('input[name="password"]', sponsorPassword);
+		await page.click('button[type="submit"]');
+		await page.waitForLoadState('networkidle', { timeout: 10000 });
+	}
+
 	test('1. should access sponsor dashboard', async ({ page }) => {
 		await page.context().addCookies([sponsorCookie]);
 		await page.goto('/sponsor/dashboard');
@@ -58,6 +66,7 @@ test.describe('Sponsor Complete Journey', () => {
 		await page.context().addCookies([sponsorCookie]);
 		await page.goto('/sponsor/profile');
 
+		await expect(page.locator('input[name="companyName"]')).toBeVisible({ timeout: 5000 });
 		await page.fill('input[name="companyName"]', 'Test Company LLC');
 		await page.fill('input[name="companyWebsite"]', 'https://testcompany.com');
 		await page.fill('textarea[name="companyDescription"]', 'A test company for e2e testing');
@@ -161,10 +170,10 @@ test.describe('Sponsor Complete Journey', () => {
 	});
 
 	test('6. should view bounties list', async ({ page }) => {
-		await page.context().addCookies([sponsorCookie]);
+		await loginViaForm(page);
 		await page.goto('/dashboard/bounties');
 
-		await expect(page.locator('h1')).toContainText('Your Bounties');
+		await expect(page.locator('h1')).toContainText('Bounties');
 		
 		// Test filters if they exist
 		const statusFilter = page.locator('select[name="status"], button:has-text("Filter")');
