@@ -116,14 +116,17 @@ test.describe('Project CRUD E2E Tests', () => {
 		await page.waitForLoadState('networkidle', { timeout: 10000 });
 
 		if (page.url().includes('/project/')) {
-			const editLink = page.locator('a:has-text("Edit")');
-			if (await editLink.isVisible({ timeout: 3000 }).catch(() => false)) {
-				await editLink.click();
-				await page.waitForURL('**/edit', { timeout: 10000 });
-				await page.fill('input[name="name"]', 'Updated Project Name');
-				await page.fill('textarea[name="description"]', 'Updated description');
-				await page.click('button[type="submit"]');
-				await page.waitForLoadState('networkidle', { timeout: 10000 });
+			const projectId = page.url().split('/project/')[1]?.split('/')[0]?.split('?')[0];
+			await page.goto(`/dashboard/project/${projectId}/edit`);
+			await page.waitForLoadState('networkidle', { timeout: 10000 });
+			await page.waitForURL('**/edit', { timeout: 10000 });
+			await page.fill('input[name="name"]', 'Updated Project Name');
+			await page.fill('textarea[name="description"]', 'Updated description');
+			await page.click('button[type="submit"]');
+			await page.waitForLoadState('networkidle', { timeout: 10000 });
+
+			if (page.url().includes('/dashboard/project/')) {
+				await expect(page.locator('h1')).toContainText('Updated Project Name');
 			}
 		}
 	});
@@ -141,6 +144,10 @@ test.describe('Project CRUD E2E Tests', () => {
 		await page.waitForLoadState('networkidle', { timeout: 10000 });
 
 		if (page.url().includes('/project/')) {
+			const projectId = page.url().split('/project/')[1]?.split('/')[0]?.split('?')[0];
+			await page.goto(`/dashboard/project/${projectId}`);
+			await page.waitForLoadState('networkidle', { timeout: 10000 });
+
 			const deleteBtn = page.locator('button:has-text("Delete")');
 			if (await deleteBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
 				page.on('dialog', async (dialog) => {

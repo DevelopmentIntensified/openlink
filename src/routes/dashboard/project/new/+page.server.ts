@@ -14,10 +14,8 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const { data, errors } = validateProjectForm(formData);
 		
-		// Add ownerId from session
 		data.ownerId = user.id;
 		
-		// Check for validation errors
 		const allErrors: ProjectFormErrors = { ...errors };
 		if (!data.name) allErrors.name = 'Project name is required';
 		
@@ -27,8 +25,9 @@ export const actions: Actions = {
 
 		try {
 			const projectId = await createProject(data as ProjectFormData);
-			return { projectId };
+			throw redirect(303, `/project/${projectId}`);
 		} catch (error) {
+			if (error?.constructor?.name === 'Redirect') throw error;
 			console.error('Error creating project:', error);
 			return fail(500, { error: 'Failed to create project' });
 		}

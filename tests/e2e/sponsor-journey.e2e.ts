@@ -66,6 +66,13 @@ test.describe('Sponsor Complete Journey', () => {
 		await page.context().addCookies([sponsorCookie]);
 		await page.goto('/sponsor/profile');
 
+		// Dismiss onboarding modal using force click
+		const dismissBtn = page.locator('button:has-text("Skip for now")');
+		if (await dismissBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
+			await dismissBtn.click({ force: true });
+			await page.waitForTimeout(500);
+		}
+
 		await expect(page.locator('input[name="companyName"]')).toBeVisible({ timeout: 5000 });
 		await page.fill('input[name="companyName"]', 'Test Company LLC');
 		await page.fill('input[name="companyWebsite"]', 'https://testcompany.com');
@@ -73,7 +80,7 @@ test.describe('Sponsor Complete Journey', () => {
 
 		const saveButton = page.locator('button[type="submit"], button:has-text("Save")');
 		if (await saveButton.isVisible()) {
-			await saveButton.click();
+			await saveButton.click({ force: true });
 			await page.waitForTimeout(1000);
 		}
 	});

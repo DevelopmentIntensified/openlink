@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 	
 	let { data }: { data: PageData } = $props();
 	
@@ -29,39 +30,6 @@
 		{ value: 'team', label: 'Team Project', desc: 'Working with a dev team' },
 		{ value: 'community', label: 'Community', desc: 'Open source community project' }
 	];
-	
-	async function handleSubmit(e: SubmitEvent) {
-		e.preventDefault();
-		isSubmitting = true;
-		
-		try {
-			const formData = new FormData();
-			formData.append('name', name);
-			formData.append('description', description);
-			formData.append('repoUrl', repoUrl);
-			formData.append('website', website);
-			formData.append('category', category);
-			formData.append('type', type);
-			formData.append('isBountyEnabled', String(isBountyEnabled));
-			
-			const response = await fetch('?/create', {
-				method: 'POST',
-				body: formData
-			});
-			
-			if (response.ok) {
-				const result = await response.json();
-				const projectId = result.data?.projectId ?? result.projectId;
-				goto(`/project/${projectId}`);
-			} else {
-				console.error('Form submission failed:', await response.text());
-			}
-		} catch (error) {
-			console.error('Error submitting form:', error);
-		} finally {
-			isSubmitting = false;
-		}
-	}
 </script>
 
 {#if data.user}
@@ -80,8 +48,10 @@
 
 			<!-- Form Card -->
 			<form
+				method="POST"
+				action="?/create"
 				class="card p-8 space-y-6 animate-scale-in"
-				onsubmit={handleSubmit}
+				use:enhance
 			>
 				<!-- Project Name -->
 				<div class="group">
@@ -240,7 +210,7 @@
 							aria-label="Toggle bounty funding"
 							class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 {isBountyEnabled ? 'bg-amber-600' : 'bg-gray-200'}"
 						>
-							<input type="hidden" name="isBountyEnabled" value={isBountyEnabled ? 'on' : ''} />
+							<input type="hidden" name="isBountyEnabled" value={String(isBountyEnabled)} />
 							<span
 								class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 {isBountyEnabled ? 'translate-x-6' : 'translate-x-1'}"
 							></span>
@@ -255,21 +225,13 @@
 					</a>
 					<button
 						type="submit"
-						disabled={isSubmitting || !name}
+						disabled={!name}
 						class="btn-primary-gradient btn-lift px-8 py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
 					>
-						{#if isSubmitting}
-							<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-							</svg>
-							Creating...
-						{:else}
-							<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-							</svg>
-							Forge Project
-						{/if}
+						<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+						</svg>
+						Forge Project
 					</button>
 				</div>
 			</form>
