@@ -6,5 +6,5 @@ export const load: PageServerLoad = async (event) => {
 	if (!user) {
 		throw redirect(302, '/login');
 	}
-	throw redirect(302, `/profile/${user.id}`);
+	throw redirect(302, `/profile/${user.username}`);
 };

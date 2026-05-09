@@ -11,7 +11,7 @@ export const load: PageServerLoad = async (event) => {
 		throw error(404, 'User not found');
 	}
 	
-	const userResult = await db.select().from(user).where(eq(user.id, username));
+	const userResult = await db.select().from(user).where(eq(user.username, username));
 	
 	if (!userResult[0]) {
 		throw error(404, 'User not found');
